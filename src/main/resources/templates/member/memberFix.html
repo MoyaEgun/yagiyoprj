@@ -61,7 +61,9 @@
 
     <br>
     <div><button type="submit" id="fixBtn" th:text="#{button.update}">수정</button></div>
-    <div><button type="button" id="addBtn">마이페이지</button></div>
+    <div><a th:href="@{|/mypage/${session.loginMember.memberId}/delete|}">탈퇴 </a></div>
+
+
 </form>
 <script>
 

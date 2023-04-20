@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,5 +27,10 @@ public class CommentController {
       return new ResponseEntity<>("해당 게시글이 존재하지 않습니다.", HttpStatus.NOT_FOUND);
     }
   }
-
+  @PostMapping("/delete")
+  public ResponseEntity delete(@RequestParam Long commentId, @RequestParam Long boardId) {
+    commentSVC.delete(commentId);
+    List<CommentDTO> commentDTOList = commentSVC.findAll(boardId);
+    return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
+  }
 }

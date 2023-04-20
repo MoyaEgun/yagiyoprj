@@ -94,11 +94,14 @@
             <th></th>
             <th></th>
           </tr>
+<!--            <td hidden th:text="${comment.id}"></td>-->
           <tr th:each="comment: ${commentList}">
-<!--            <td th:text="${comment.id}"></td>-->
             <td th:text="${comment.commentWriter}"></td>
             <td th:text="${comment.commentContents}"></td>
             <td th:text="${comment.commentCreatedTime}"></td>
+            <td>
+              <button onclick="deleteComment(${comment.id}, ${comment.boardId})">삭제</button>
+            </td>
           </tr>
         </table>
       </div>
@@ -206,6 +209,27 @@
      btn_update.disabled = true;
      btn_delete.disabled = true;
      }
+
+     function deleteComment(commentId, boardId) {
+  if (confirm("댓글을 삭제하시겠습니까?")) {
+    $.ajax({
+      url: "/delete",
+      type: "POST",
+      data: {
+        commentId: commentId,
+        boardId: boardId
+      },
+      success: function(response) {
+        location.reload();
+      },
+      error: function() {
+        alert("댓글 삭제에 실패하였습니다.");
+      }
+    });
+  }
+}
+
+
 
 
 

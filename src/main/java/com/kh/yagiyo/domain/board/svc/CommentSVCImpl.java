@@ -42,4 +42,9 @@ public class CommentSVCImpl implements CommentSVC {
     return commentDTOList;
   }
 
+  @Override
+  public void delete(Long commentId) {
+    commentRepository.deleteById(commentId);
+  }
+
 }
