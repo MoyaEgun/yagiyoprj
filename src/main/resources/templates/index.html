@@ -43,7 +43,7 @@
                     <nav class="gnb_box">
                         <a th:href="@{/name}">AI분석</a>
                         <a href="">커뮤니티</a>
-                        <a href="">약국정보</a>
+                        <a th:href="@{/map}">약국정보</a>
                         <div th:if="${!session.isEmpty()}">
                             <p th:text="${session.loginMember.gubun}"></p>
                         </div>
