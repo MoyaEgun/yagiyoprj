@@ -41,16 +41,15 @@
         <p id="recent-search"></p>
       </div>
       <nav class="gnb_box">
-        <a th:href="@{/name}">AI분석</a>
+        <a th:href="@{/name}">📝AI분석</a>
         <a href="/board/paging">커뮤니티</a>
         <a th:href="@{/map}">약국정보</a>
-          <th:bolck
-              class="mypage"
-              th:unless="${session.isEmpty()}"
-          >
-            <a href="" th:href="@{|/mypage/${session.loginMember.memberId}/fix|}">마이페이지</a>
-          </th:bolck>
-
+        <th:bolck
+            class="mypage"
+            th:unless="${session.isEmpty()}"
+        >
+          <a href="" th:href="@{|/mypage/${session.loginMember.memberId}/fix|}">마이페이지</a>
+        </th:bolck>
 
         <div>
           <th:bolck

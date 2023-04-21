@@ -89,12 +89,12 @@
       <div id="comment-list">
         <table>
           <tr>
-<!--            <th>댓글번호</th>-->
+            <!--            <th>댓글번호</th>-->
             <th></th>
             <th></th>
             <th></th>
           </tr>
-<!--            <td hidden th:text="${comment.id}"></td>-->
+          <!--            <td hidden th:text="${comment.id}"></td>-->
           <tr th:each="comment: ${commentList}">
             <td th:text="${comment.commentWriter}"></td>
             <td th:text="${comment.commentContents}"></td>
@@ -140,47 +140,47 @@
   </footer>
 </div>
 <script th:inline="javascript">
-    const commentWrite = () => {
-        const writer = document.getElementById("commentWriter").value;
-        const contents = document.getElementById("commentContents").value;
-        console.log("작성자: ", writer);
-        console.log("내용: ", contents);
-        const id = [[${board.id}]];
-        $.ajax({
-           // 요청방식: post, 요청주소: /comment/save, 요청데이터: 작성자, 작성내용, 게시글번호
-           type: "post",
-           url: "/comment/save",
-           data: {
-               "commentWriter": writer,
-               "commentContents": contents,
-               "boardId": id
-           },
-           success: function (res) {
-               console.log("요청성공", res);
-               let output = "<table>";
-<!--               output += "<tr><th>댓글번호</th>";-->
-               output += "<th>작성자</th>";
-               output += "<th>내용</th>";
-               output += "<th>작성시간</th></tr>";
-               for (let i in res) {
-                   output += "<tr>";
-<!--                   output += "<td>" + res[i].id + "</td>";-->
-                   output += "<td>" + res[i].commentWriter + "</td>";
-                   output += "<td>" + res[i].commentContents + "</td>";
-                   output += "<td>" + res[i].commentCreatedTime + "</td>";
-                   output += "</tr>";
-               }
-               output += "</table>";
-               document.getElementById('comment-list').innerHTML = output;
-<!--               document.getElementById('commentWriter').value = '';-->
-               document.getElementById('commentContents').value = '';
-           },
-           error: function (err) {
-               console.log("요청실패", err);
-           }
-        });
 
+const commentWrite = () => {
+  const writer = document.getElementById("commentWriter").value;
+  const contents = document.getElementById("commentContents").value;
+  console.log("작성자: ", writer);
+  console.log("내용: ", contents);
+  const id = [[${board.id}]];
+
+  $.ajax({
+    type: "post",
+    url: "/comment/save",
+    data: {
+      "commentWriter": writer,
+      "commentContents": contents,
+      "boardId": id
+    },
+    success: function (res) {
+      console.log("요청성공", res);
+      let output = "<table>";
+      output += "<th>작성자</th>";
+      output += "<th>내용</th>";
+      output += "<th>작성시간</th>";
+      output += "<th>삭제</th></tr>"; // 삭제 버튼 추가
+      for (let i in res) {
+        output += "<tr>";
+        output += "<td>" + res[i].commentWriter + "</td>";
+        output += "<td>" + res[i].commentContents + "</td>";
+        output += "<td>" + res[i].commentCreatedTime + "</td>";
+        output += "<td><button onclick='deleteComment(" + res[i].id + "," + id + ")'>삭제</button></td>"; // 삭제 버튼 생성
+        output += "</tr>";
+      }
+      output += "</table>";
+      document.getElementById('comment-list').innerHTML = output;
+      document.getElementById('commentContents').value = '';
+    },
+    error: function (err) {
+      console.log("요청실패", err);
     }
+  });
+}
+
     const listReq = () => {
         console.log("목록 요청");
         const page = [[${page}]];
@@ -213,11 +213,11 @@
      function deleteComment(commentId, boardId) {
   if (confirm("댓글을 삭제하시겠습니까?")) {
     $.ajax({
-      url: "/delete",
-      type: "POST",
+      url: "/comment/delete",
+      type: "DELETE",
       data: {
         commentId: commentId,
-        boardId: boardId
+        boardId: String(boardId) // boardId를 문자열로 변환
       },
       success: function(response) {
         location.reload();

@@ -53,8 +53,8 @@ private final CommentSVC commentSVC;
 //    게시글 데이터를 가져와서 detail.html에 출력
     boardSVC.updateHits(id);
     BoardForm boardForm = boardSVC.findById(id);
-    List<CommentDTO> commentDTOList = commentSVC.findAll(id);
-    model.addAttribute("commentList" ,commentDTOList );
+//    List<CommentDTO> commentDTOList = commentSVC.findAll(id);
+//    model.addAttribute("commentList" ,commentDTOList );
     model.addAttribute("board", boardForm);
     model.addAttribute("page", pageable.getPageNumber());
     return "/board/boardDetail";

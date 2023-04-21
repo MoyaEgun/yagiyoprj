@@ -13,5 +13,5 @@ public interface CommentSVC {
 
   List<CommentDTO> findAll(Long boardId);
 
-  public void delete(Long commentId);
+  public void delete(Long Id);
 }

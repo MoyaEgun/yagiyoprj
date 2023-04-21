@@ -43,8 +43,8 @@ public class CommentSVCImpl implements CommentSVC {
   }
 
   @Override
-  public void delete(Long commentId) {
-    commentRepository.deleteById(commentId);
+  public void delete(Long Id) {
+    commentRepository.deleteById(Id);
   }
 
 }

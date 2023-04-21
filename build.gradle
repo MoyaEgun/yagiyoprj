@@ -40,6 +40,8 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 	/******************************************/
+// 쿼리문 ? 뜨는거 바꿔줌
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
 }
 
 tasks.named('test') {
