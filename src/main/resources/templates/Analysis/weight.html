@@ -104,7 +104,7 @@
             <button
                 id="btn-next"
                 class="btn btn-radius btn-dark"
-                onclick="nextBtn('{{gender}}', '{{name}}', '{{age}}', '{{illness}}', '{{height}}');"
+                onclick="nextBtn('{{gender}}', '{{name}}', '{{age}}', '{{illness}}', '{{dosage}}', '{{height}}');"
             >
               다음
             </button>
@@ -115,7 +115,7 @@
   </div>
 </div>
 <script>
-      function nextBtn(defaultGender, defaultName, defaultAge, defaultIllness, defaultHeight) {
+      function nextBtn(defaultGender, defaultName, defaultAge, defaultIllness, defaultDosage, defaultHeight) {
         const nextInput = document.getElementById('kilogram');
         const nextError = document.getElementById('next-error');
         const inputValue = nextInput.value.trim();
@@ -137,6 +137,7 @@
           const gender = urlParams.get('gender') || defaultGender;
           const age = urlParams.get('age') || dufaultAGe;
           let illness = urlParams.get('illness') || defaultIllness;
+          let dosage = urlParams.get('dosage') || defaultDosage;
           const height = urlParams.get('height') || dufaultHeight;
           const weight = inputValue;
           const bmi = calculateBMI(height, weight);
@@ -192,6 +193,8 @@
               encodeURIComponent(age) +
               '&illness=' +
               encodeURIComponent(illness) +
+              '&dosage=' +
+              encodeURIComponent(dosage) +
               '&height=' +
               encodeURIComponent(height) +
               '&weight=' +

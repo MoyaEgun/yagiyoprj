@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <title>글 수정</title>
-        <link rel="stylesheet" href="../css/boardupdate.css">
+        <link rel="stylesheet" href="../css/boardUpdate.css">
     </head>
     <style>
         @charset "UTF-8";
@@ -181,7 +181,7 @@
         .row1 input {
             border: none;
         }
-        .row1 input::focus {
+        .row1 input:focus {
             border: none;
         }
         .row textarea {
@@ -206,25 +206,31 @@
             font-size: 15px;
             width: 250px;
             height: 50px;
-            background-color: #007bff;
+            background-color: #999;
             border: none;
             color: #fff;
             cursor: pointer;
             text-decoration: none;
             transition: background-color 0.3s ease;
         }
+        .submit input:hover{
+            background-color: #5b1a7c;
+        }
+
         .board_paging {
             font-size: 15px;
             width: 250px;
             height: 50px;
-            background-color: #eee;
-            border: 1px solid #000;
-            color: #000;
+            background-color: #999;
+            color: #fff;
             cursor: pointer;
             text-decoration: none;
             transition: background-color 0.3s ease;
             text-align: center;
             line-height: 50px;
+        }
+        .board_paging:hover{
+            background-color: #5b1a7c;
         }
         .board_paging a {
             display: inline-block;
@@ -289,6 +295,7 @@
             width: 100%;
             text-align: left;
         }
+
     </style>
     <body>
         <div class="wrapper">
@@ -335,7 +342,7 @@
                 </div>
             </header>
             <div class="save_box">
-                <h3>글수정</h3>
+                <h3>수정</h3>
                 <form
                     th:action="@{/board/update/{id}(id=${board.id})}"
                     method="post"
@@ -363,11 +370,10 @@
                         />
                     </div>
                     <div class="row row4">
-                        내용
                         <textarea
                             name="boardContents"
-                            cols="30"
-                            rows="10"
+                            cols="200"
+                            rows="50"
                             th:text="${board.boardContents}"
                         ></textarea>
                     </div>
@@ -380,7 +386,7 @@
                         <div class="submit">
                             <input
                                 type="button"
-                                value="글수정"
+                                value="수정"
                                 onclick="boardUpdate()"
                                 id="btn_update"
                             />

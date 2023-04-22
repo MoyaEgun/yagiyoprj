@@ -42,6 +42,8 @@ dependencies {
 	/******************************************/
 // 쿼리문 ? 뜨는거 바꿔줌
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
+
+	implementation 'net.coobird:thumbnailator:0.4.14'
 }
 
 tasks.named('test') {

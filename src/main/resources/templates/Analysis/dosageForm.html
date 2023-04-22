@@ -9,8 +9,7 @@
   <link rel="stylesheet" href="" th:href="@{/css/Analysis.css}">
   <link rel="stylesheet" href="" th:href="@{/css/closeModal.css}">
   <style>
-
-/*질문글자 크기, 색깔*/
+    /*질문글자 크기, 색깔*/
 .question-section em {
   padding-left: 20px;
   font-size: 16px;
@@ -36,8 +35,8 @@ input[type='checkbox'] {
 /*라벨 레이아웃*/
 .question-answer-wrap {
   display: grid;
-  justify-content: left;
-  grid-template-columns: repeat(auto-fill, 76px);
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, 90px);
   margin-left: 25px;
   gap: 25px 25px;
 }
@@ -47,8 +46,8 @@ input[type='checkbox'] {
   flex-direction: row;
   font-size: 16px;
   font-weight: bold;
-  width: 76px;
-  height: 76px;
+  width: 75px;
+  height: 75px;
   background-color: #fff;
   text-align: center;
   justify-content: center;
@@ -115,7 +114,7 @@ input[type='checkbox'] {
                     <input
                         id="num1"
                         type="checkbox"
-                        value="306"
+                        value="capsule"
                         class="input-checkbox input-answer"
                         name="answer"
                         data-only="null"
@@ -180,19 +179,6 @@ input[type='checkbox'] {
                     <span>츄어볼</span>
                   </label>
                 </li>
-                <li class="category">
-                  <label class="label-checkbox label-question">
-                    <input
-                        type="checkbox"
-                        class="input-checkbox input-answer"
-                        name="answer"
-                        id="none"
-                        value="311"
-                        data-only="1"
-                    />
-                    <span>상관없음</span>
-                  </label>
-                </li>
               </ul>
             </section>
           </div>
@@ -208,7 +194,7 @@ input[type='checkbox'] {
             <button
                 id="btn-next"
                 class="btn btn-radius btn-dark"
-                onclick="handleNextClick()"
+                onclick="handleNextClick('{{gender}}', '{{name}}', '{{age}}', '{{illness}}')"
             >
               다음
             </button>
@@ -219,9 +205,8 @@ input[type='checkbox'] {
   </div>
 </div>
 <script>
-      //카테고리 색상
+       //카테고리 색상
       const categories = document.querySelectorAll('.category');
-
       categories.forEach(category => {
         const checkbox = category.querySelector('input[type="checkbox"]');
         checkbox.addEventListener('click', () => {
@@ -232,18 +217,19 @@ input[type='checkbox'] {
           }
         });
       });
+
       //에러메시지
-      function handleNextClick() {
+      function handleNextClick(defaultGender, defaultName, defaultAge, defaultIllness) {
         // check if at least one checkbox is selected
         const checkboxes = document.getElementsByName('answer');
         let isChecked = false;
-        for (let i = 0; i < checkboxes.length; i++) {
-          if (checkboxes[i].checked) {
-            isChecked = true;
-            break;
-          }
+        let selectedAnswers = [];
+         for (let i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+          isChecked = true;
+          selectedAnswers.push(checkboxes[i].value); // Add the value of the selected checkbox to the array
         }
-
+      }
         // display error message if no checkbox is selected
         if (!isChecked) {
           const errorMsg = document.querySelector('.survey-errormsg');
@@ -252,10 +238,29 @@ input[type='checkbox'] {
         }
 
         // continue to the next question
-         window.location.href =
-          'http://localhost:9080/point';
-      }
-    // 모달
+         let urlParams = new URLSearchParams(window.location.search);
+          let name = urlParams.get('name') || defaultName;
+          let gender = urlParams.get('gender') || defaultGender;
+          let age = urlParams.get('age') || defaultAge;
+          let illness = urlParams.get('illness') || defaultIllness;
+          let inputValue = selectedAnswers.join(',');
+
+
+          let resultURL =
+            'http://localhost:9080/height?name=' +
+            encodeURIComponent(name) +
+            '&gender=' +
+            encodeURIComponent(gender) +
+            '&age=' +
+            encodeURIComponent(age) +
+            '&illness=' +
+            encodeURIComponent(illness) +
+            '&dosage=' +
+            encodeURIComponent(inputValue);
+          window.location.href = resultURL;
+
+        }
+        // 모달
           let modal = document.getElementById("myModal");
 
           // Get the <span> element that closes the modal

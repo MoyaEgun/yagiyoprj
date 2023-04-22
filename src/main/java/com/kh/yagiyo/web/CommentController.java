@@ -26,18 +26,10 @@ public class CommentController {
   private final CommentSVC commentSVC;
   private final boardSVC boardSVC;
 
-  @GetMapping("/board/{boardId}")
-  public String showBoardPage(@PathVariable Long boardId, Model model) {
-    // 게시글 정보를 조회하고 모델에 추가
-    BoardForm board = boardSVC.findById(boardId);
-    model.addAttribute("board", board);
-
-    // 해당 게시글의 댓글 목록을 조회하여 모델에 추가
-    List<CommentDTO> comments = commentSVC.findAll(boardId);
-    model.addAttribute("comments", comments);
-
-    // 게시글 상세 페이지를 표시하는 뷰 이름을 리턴
-    return "board/boardDetail";
+  @GetMapping("/list/{boardId}")
+  public ResponseEntity<List<CommentDTO>> getComments(@PathVariable Long boardId) {
+    List<CommentDTO> commentDTOList = commentSVC.findAll(boardId);
+    return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
   }
 
   @PostMapping("/save")
@@ -52,17 +44,11 @@ public class CommentController {
     }
   }
 
+
   @DeleteMapping("/delete")
   public ResponseEntity<List<CommentDTO>> delete(@RequestParam("commentId") Long id, @RequestParam("boardId") Long boardId) {
     commentSVC.delete(id);
     List<CommentDTO> commentDTOList = commentSVC.findAll(boardId);
     return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
   }
-
-  @GetMapping("/{id}")
-  public List<CommentDTO> getComments(@PathVariable Long id) {
-    List<CommentDTO> commentDTOList = commentSVC.findAll(id);
-    return commentDTOList;
-  }
-
 }

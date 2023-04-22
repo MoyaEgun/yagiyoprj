@@ -14,7 +14,7 @@
 </head>
 <body>
     <div class="wrapper">
-        <div class="logo"><a th:src="@{/}"><img th:src="@{../img/black-yagiyo.png}"></a></div>
+        <div class="logo"><a th:href="@{/}"><img th:src="@{../img/black-yagiyo.png}"></a></div>
 
         <form class="content" action="#" th:action="@{/findId}" th:method="post" th:object="${findIdForm}">
             <input type="hidden" th:field="*{id}">
@@ -28,6 +28,11 @@
                 <span th:text="${findIdForm.id}"></span>
             </div>
             <div class="btn"><button type="submit">아이디 찾기</button></div>
+            <div class="text-box">
+                <span class="idfind"><a th:href="@{/login}">로그인</a></span>
+                <span class="pwfind"><a th:href="@{/findPW}">비밀번호찾기</a></span>
+                <span class="signup"><a th:href="@{/members/add}">회원가입</a></span>
+            </div>
         </form>
     </div>
 </body>

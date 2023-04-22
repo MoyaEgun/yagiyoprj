@@ -57,11 +57,12 @@ public class BoardForm {
   return boardForm;
   }
 
-  public BoardForm(Long id, String boardWriter, String boardTitle, int boardHits, LocalDateTime boardCreatedTime) {
+  public BoardForm(Long id, String boardWriter, String boardTitle, String boardContents, int boardHits, LocalDateTime boardCreatedTime) {
     this.id = id;
     this.boardWriter = boardWriter;
     this.boardTitle = boardTitle;
     this.boardHits = boardHits;
     this.boardCreatedTime = boardCreatedTime;
+    this.boardContents = boardContents;
   }
 }

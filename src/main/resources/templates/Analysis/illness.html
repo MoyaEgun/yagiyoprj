@@ -15,8 +15,38 @@
   <div class="survey-wrap">
     <div class="survey-contents">
       <div class="survey-contents-inner">
+        <!-- HTML code for the modal -->
+        <div id="myModal" class="modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>분석을 종료하시겠습니까?</p>
+            <button id="yes-btn">Yes</button>
+            <button id="no-btn">No</button>
+          </div>
+        </div>
+        <a href="#" class="close-survey" onclick="openModal(); return false;">
+          <img th:src="@{/img/close2.png}" alt="close" />
+        </a>
         <div class="survey-test">
-          <nav class="survey-test-header"></nav>
+          <nav class="survey-test-header">
+            <ul class="step-list-wrap">
+              <li data="기본정보" class="on">
+                <span>기본정보</span>
+              </li>
+              <img src="/img/right2.png" />
+              <li data="증상/불편">
+                <span>증상/불편</span>
+              </li>
+              <img src="/img/right2.png" />
+              <li data="생활습관" class="on">
+                <span>생활습관</span>
+              </li>
+              <img src="/img/right2.png" />
+              <li data="기타">
+                <span>기타</span>
+              </li>
+            </ul>
+          </nav>
           <div class="survey-progress">
             <div id="survey-progress-rate" style="width: 20%"></div>
           </div>
@@ -254,30 +284,30 @@ const urlParams = new URLSearchParams(window.location.search);
 const categoriesParam = urlParams.get('category');
 const categoryValues = categoriesParam ? categoriesParam.split(',') : [];
 
-const categoryInfo = {
-  blood: '혈액순환',
-  digestion: '소화/장',
-  skin: '피부',
-  // Add more category-value pairs here
-};
+<!--const categoryInfo = {-->
+<!--  blood: '혈액순환',-->
+<!--  digestion: '소화/장',-->
+<!--  skin: '피부',-->
+<!--  // Add more category-value pairs here-->
+<!--};-->
 
-categoryValues.forEach(category => {
-  switch (category) {
-    case 'blood':
-      // Display information about blood circulation
-      console.log(categoryInfo.blood);
-      break;
-    case 'digestion':
-      // Display information about digestion
-      console.log(categoryInfo.digestion);
-      break;
-    case 'skin':
-      // Display information about skin health
-      console.log(categoryInfo.skin);
-      break;
-    // Add more cases for other categories
-  }
-});
+<!--categoryValues.forEach(category => {-->
+<!--  switch (category) {-->
+<!--    case 'blood':-->
+<!--      // Display information about blood circulation-->
+<!--      console.log(categoryInfo.blood);-->
+<!--      break;-->
+<!--    case 'digestion':-->
+<!--      // Display information about digestion-->
+<!--      console.log(categoryInfo.digestion);-->
+<!--      break;-->
+<!--    case 'skin':-->
+<!--      // Display information about skin health-->
+<!--      console.log(categoryInfo.skin);-->
+<!--      break;-->
+<!--    // Add more cases for other categories-->
+<!--  }-->
+<!--});-->
 
 function handleNextClick(defaultGender, defaultName, defaultAge) {
   // check if at least one checkbox is selected
@@ -303,7 +333,7 @@ function handleNextClick(defaultGender, defaultName, defaultAge) {
   let age = urlParams.get('age') || defaultAge;
   let inputValue = selectedAnswers.join(','); // Combine the selected answers into a comma-separated string
   let resultURL =
-    'http://localhost:9080/height?name=' +
+    'http://localhost:9080/dosage?name=' +
     encodeURIComponent(name) +
     '&gender=' +
     encodeURIComponent(gender) +
@@ -313,6 +343,37 @@ function handleNextClick(defaultGender, defaultName, defaultAge) {
     encodeURIComponent(inputValue);
   window.location.href = resultURL;
 }
+// 모달
+            let modal = document.getElementById("myModal");
+
+            // Get the <span> element that closes the modal
+            let span = document.getElementsByClassName("close")[0];
+
+            // Get the Yes and No buttons
+            let yesBtn = document.getElementById("yes-btn");
+
+            let noBtn = document.getElementById("no-btn");
+
+            // Open the modal
+            function openModal() {
+              modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+              modal.style.display = "none";
+            }
+
+            // When the user clicks on Yes or No, close the modal and redirect if necessary
+            yesBtn.onclick = function() {
+              modal.style.display = "none";
+              window.location.href = 'http://localhost:9080';
+            }
+
+            noBtn.onclick = function() {
+              modal.style.display = "none";
+            }
+
 
        </script>
   </body>

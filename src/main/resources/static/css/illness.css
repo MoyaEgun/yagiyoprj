@@ -29,7 +29,7 @@ input[type='checkbox'] {
 /*라벨 레이아웃*/
 .question-answer-wrap {
   display: grid;
-  justify-content: left;
+  justify-content: center;
   grid-template-columns: repeat(auto-fill, 100px);
   margin-left: 25px;
   gap: 25px 25px;

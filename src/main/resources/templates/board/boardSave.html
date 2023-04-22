@@ -80,15 +80,18 @@
                 제목 <input type="text" name="boardTitle"/>
             </div>
             <div class="row row4">
-                내용
-                <textarea
+                <div>
+                <textarea id="textarea"
                         name="boardContents"
-                        cols="30"
-                        rows="10"
+                        cols="200"
+                        rows="50"
                 ></textarea>
+                </div>
             </div>
-            <div class="row row5">
-                파일첨부 <input type="file" name="boardFile" multiple/>
+            <label for="boardFile"></label>
+            <input type="file" multiple name="boardFile" id="boardFile" accept="image/*" onchange="previewImage(this);"><br>
+            <div id="preview" hidden>
+                <img id="imagePreview" src="#" alt="">
             </div>
             <div class="bottom_btn">
                 <div class="submit">
@@ -131,6 +134,18 @@
         </div>
     </footer>
 </div>
-<script></script>
+<script th:inline="javascript">
+    function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('imagePreview').setAttribute('src', e.target.result);
+                    preview.hidden=false;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+</script>
+
 </body>
 </html>

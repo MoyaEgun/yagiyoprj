@@ -5,10 +5,50 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title th:text="${pageTitle}">결과</title>
-  <link rel="stylesheet" href="/css/result.css" th:href="@{/css/result.css}" />
+  <link
+      rel="stylesheet"
+      href="/css/result.css"
+      th:href="@{/css/result.css}"
+  />
+
   <style>
-  #height-value, #weight-value {display: none; }
-  </style>
+    .left {
+    font-size: 20px;
+    font-weight: 700;
+    padding: 10px;
+    }
+    .left2 {
+      font-size: 20px;
+      font-weight: 700;
+      padding: 10px;
+    }
+    .left3 {
+      font-size: 20px;
+      font-weight: 700;
+      padding: 10px;
+    }
+    .right {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .right .tag{
+    justify-content: left;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: row;
+    }
+    .right .tag li {
+     margin-right: 34px;
+    }
+    ul {
+      font-size: 14px;
+    }
+      #height-value,
+      #weight-value {
+        display: none;
+      }
+      .hidden{display: none;}
+    </style>
 </head>
 <body>
 <div id="app">
@@ -49,12 +89,12 @@
         <dl>
           <dt>성별:</dt>
           <span id="gender-value"></span>
-          ㅤ<dt>나이:</dt>
+          ㅤ
+          <dt>나이:</dt>
           <span id="age-value"></span>
           <!-- Display BMI value -->
-          ㅤ<dt class="open-bmi-layer">
-          BMI:
-        </dt>
+          ㅤ
+          <dt class="open-bmi-layer">BMI:</dt>
           <span id="bmi-value"></span>
           <dd><span id="height-value"></span></dd>
           <dd><span id="weight-value"></span></dd>
@@ -63,12 +103,16 @@
           <div class="graph">
             <ul class="data">
               <li class="lv1">저체중</li>
-              <li class="lv2" >정상</li>
+              <li class="lv2">정상</li>
               <li class="lv3">과체중</li>
               <li class="lv4">비만</li>
               <li class="lv5">고도비만</li>
             </ul>
-            <span class="dot" id="bmi-dot" style="display: block; margin-left: ${bmiDotPosition}%;"></span>
+            <span
+                class="dot"
+                id="bmi-dot"
+                style="display: block; margin-left: ${bmiDotPosition}%;"
+            ></span>
             <ul class="label">
               <li>&nbsp;</li>
               <li>18.5</li>
@@ -86,21 +130,13 @@
         <p>* 본 결과는 의사의 처방을 대신하지 않습니다.</p>
       </div>
     </section>
-    <nav class="survey-nav">
+    <div class="survey-nav">
       <h2>
         추천영양성분
-        <em>5</em>
+        <em id="selected-count">0</em>
       </h2>
       <ul>
-        <li class="nav-item" data-id="omega3">
-          <div class="img-wrap" style="background-color: #b1d9f2">
-            <img src="/img/오메가3.png" alt="" />
-          </div>
-          <div class="text-wrap">
-            <p>오메가3</p>
-          </div>
-        </li>
-        <li class="nav-item" data-id="lutein">
+        <li class="nav-item" data-illness="eyes">
           <div class="img-wrap" style="background-color: #f9d4bf">
             <img src="/img/루테인.png" alt="" />
           </div>
@@ -108,47 +144,40 @@
             <p>루테인</p>
           </div>
         </li>
-        <li class="nav-item" data-id="hyals">
-          <div class="img-wrap" style="background-color: #e9faff">
-            <img src="/img/히알루론산.png" alt="" />
+        <li class="nav-item" data-illness="antioxidation">
+          <div class="img-wrap" style="background-color: lightyellow">
+            <img src="/img/비타민B.png" alt="" />
           </div>
           <div class="text-wrap">
-            <p>히알루론산 스피루리나</p>
+            <p>비타민C</p>
           </div>
         </li>
-        <li class="nav-item" data-id="cj-fermentenzyme">
-          <div class="img-wrap" style="background-color: #cccccc">
-            <img src="/img/발효효소 베이직.png" alt="" />
+        <li class="nav-item" data-illness="joint">
+          <div class="img-wrap" style="background-color: #ebf5f5">
+            <img src="/img/칼슘.png" alt="" />
           </div>
           <div class="text-wrap">
-            <p>발효효소 베이직</p>
+            <p>칼슘</p>
           </div>
         </li>
-        </li>
-        <li class="nav-item" data-id="theanine">
-          <div class="img-wrap" style="background-color: #EBF5F5">
-            <img src="/img/테아닌.png" alt="" />
-          </div>
-          <div class="text-wrap">
-            <p>테아닌</p>
-          </div>
-        </li>
+
       </ul>
-    </nav>
+    </div>
     <!--    영양성분 분석-->
-    <section id="omega3" class="result-content omega3" data-title="오메가3" data-color="#b1d9f2">
+    <section id="omega3" class="hidden" data-title="오메가3" data-color="#b1d9f2">
       <div class="inner">
-        <div class="header result-content-header" data-color="#b1d9f2" style="background-color: rgba(177, 217, 242, 0.5);">
+        <div
+            class="header result-content-header"
+            data-color="#b1d9f2"
+            style="background-color: rgba(249, 212, 191, 0.5)"
+        >
           <div class="left">
-            <h4>오메가3</h4>
-            <ul>
-              <li># 혈중중성지방 개선에 도움</li>
-              <br>
-              <li># 혈행 개선에 도움</li>
-              <br>
-              <li># 눈 건강에 도움</li>
+            <h4>Omega 3</h4>
+            <ul class="omega-left">
+              <li># Helps improve blood triglycerides</li>
+              <li># Helps improve blood circulation</li>
+              <li># Helps with eye health</li>
             </ul>
-            <span> * 30대초반의 남성 67.32%가 추천받았습니다.</span>
           </div>
           <div class="right">
             <ul class="tag">
@@ -161,183 +190,567 @@
                 <p>혈액순환</p>
               </li>
             </ul>
-            <div class="rating">
-              <div class="progress" data="4.0">
-                <canvas width="40" height="40"></canvas>
-              </div>
-              <span class="value">4.0</span>
-            </div>
-            <p class="rating-label">추천점수</p>
           </div>
         </div>
         <div class="content">
           <h1>추천 영양제</h1>
           <p>
-            분석 결과를 토대로 추천하는 영양제입니다. 자세한 내용이 궁금하다면 제품을 클릭해주세요
+            분석 결과를 토대로 추천하는 영양제입니다. 자세한 내용이
+            궁금하다면 제품을 클릭해주세요
           </p>
           <ul id="result">
             <li>
               <span id="illness-value"></span>
-              <a href="https://search.shopping.naver.com/catalog/21839321494?query=%EC%98%A4%EB%A9%94%EA%B0%803&NaPm=ct%3Dlgk86zo0%7Cci%3Daab56bbae994c01b9c17472b65b8e5df198d71a6%7Ctr%3Dslsl%7Csn%3D95694%7Chk%3D07a53635ea041363f45bacdbe51195011f956f24">
-                <img src="/img/프로메가오메가3.jpg" alt="" width="100" height="100">
+              <a
+                  href="https://search.shopping.naver.com/catalog/21839321494?query=%EC%98%A4%EB%A9%94%EA%B0%803&NaPm=ct%3Dlgk86zo0%7Cci%3Daab56bbae994c01b9c17472b65b8e5df198d71a6%7Ctr%3Dslsl%7Csn%3D95694%7Chk%3D07a53635ea041363f45bacdbe51195011f956f24"
+              >
+                <img
+                    src="/img/프로메가오메가3.jpg"
+                    alt=""
+                    width="100"
+                    height="100"
+                />
               </a>
             </li>
           </ul>
         </div>
-        <div class="content"></div>
-        <div class="food"></div>
         <div class="footer omega3"></div>
       </div>
     </section>
+    <section
+        id="hyals"
+        class="hidden"
+        data-title="히알루론산"
+        data-color="#f9d4bf"
+    >
+      <div class="inner">
+        <div
+            class="header result-content-header"
+            data-color="#f9d4bf"
+            style="background-color: rgba(214, 240, 254, 0.5)"
+        >
+          <div class="left2">
+            <h4>히알루론산</h4>
+            <ul>
+              <li># 소화과정에 필요한 발효효소</li>
+            </ul>
+          </div>
+          <div class="right">
+            <ul class="tag">
+              <li>
+                <span class="icon icon-bone"></span>
+                <p>뼈ㆍ관절</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="content">
+          <h1>추천 영양제</h1>
+          <p>
+            분석 결과를 토대로 추천하는 영양제입니다. 자세한 내용이
+            궁금하다면 제품을 클릭해주세요
+          </p>
+          <ul id="result3">
+            <li>
+              <a
+                  href="https://search.shopping.naver.com/catalog/21839321494?query=%EC%98%A4%EB%A9%94%EA%B0%803&NaPm=ct%3Dlgk86zo0%7Cci%3Daab56bbae994c01b9c17472b65b8e5df198d71a6%7Ctr%3Dslsl%7Csn%3D95694%7Chk%3D07a53635ea041363f45bacdbe51195011f956f24"
+              >
+                <img
+                    src="/img/프로메가오메가3.jpg"
+                    alt=""
+                    width="100"
+                    height="100"
+                />
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section
+        id="probiotics"
+        class="hidden"
+        data-title="프로바이오틱스"
+        data-color="#efe9d9"
+    >
+      <div class="inner">
+        <div
+            class="header result-content-header"
+            data-color="#efe9d9"
+            style="background-color: rgba(255, 255, 227, 0.5)"
+        >
+          <div class="left3">
+            <h4>프로바이오틱스</h4>
+            <ul>
+              <li># 유산균 증식 및 유해균 억제</li>
+              <li># 배변활동 원활에 도움을 줄 수 있음</li>
+            </ul>
+          </div>
+          <div class="right">
+            <ul class="tag">
+              <li>
+                <span class="icon icon-skinhealth"></span>
+                <p>항산화</p>
+              </li>
+              <li>
+                <span class="icon icon-skinmoist"></span>
+                <p>피부건강</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="content">
+          <h1>추천 영양제</h1>
+          <p>
+            분석 결과를 토대로 추천하는 영양제입니다. 자세한 내용이
+            궁금하다면 제품을 클릭해주세요
+          </p>
+          <ul id="result2">
+            <li>
+              <a
+                  href="https://search.shopping.naver.com/catalog/21839321494?query=%EC%98%A4%EB%A9%94%EA%B0%803&NaPm=ct%3Dlgk86zo0%7Cci%3Daab56bbae994c01b9c17472b65b8e5df198d71a6%7Ctr%3Dslsl%7Csn%3D95694%7Chk%3D07a53635ea041363f45bacdbe51195011f956f24"
+              >
+                <img
+                    src="/img/프로메가오메가3.jpg"
+                    alt=""
+                    width="100"
+                    height="100"
+                />
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
   </main>
-   <footer>푸터</footer>
-  </div>
+  <footer>푸터</footer>
+</div>
+<script th:src="@{../js/result.js}"></script>
+<!--<script th:src="@{../js/illness.js}"></script>-->
 <script>
-      function getUrlParameter(name) {
-        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-        var results = regex.exec(location.search);
-        return results === null
-          ? ''
-          : decodeURIComponent(results[1].replace(/\+/g, ' '));
-      }
-
-      // Define the updated information in a JSON object
-      const updatedInfo = {
-        "Helps improve blood triglycerides": "New information 1",
-        "Helps improve blood circulation": "New information 2",
-        "Helps with eye health": "New information 3"
+      const jsonData = {
+        eyes: {
+          lutein: {
+            name: '루테인',
+            description:
+              '# 노화로 인해 감소될 수 있는 황반색소밀도를 유지하여 눈건강에 도움을 줄 수 있음.\nㅤ\n # 1일 섭취량 : 성인 20mgㅤ',
+               image: '/img/루테인.png',
+          },
+        },
+        antioxidation: {
+          vitaminC: {
+            name: '비타민C',
+            description:
+              '# 결합조직 형성과 기능유지에 필요\nㅤ \n# 철의 흡수에 필요 \nㅤ \n# 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요\nㅤ \n# 1일 섭취량 : 영, 유아의 경우 35-45 mg, 아동은 50-90 mg, 성인은 100 mg, 임산부와 흡연자는 130-140 mg',
+          },
+        },
+        joint: {
+          calcium: {
+            name: '칼슘ㆍ마그네슘',
+            description:
+              '# 뼈와 치아 형성에 필요 \nㅤ \n# 신경과 근육 기능 유지에 필요\nㅤ \n# 정상적인 혈액응고에 필요\nㅤ \n# 골다공증발생 위험 감소에 도움을 줌\nㅤ \n# 1일 섭취량: 성인 6~700mg',
+          },
+        },
       };
 
-      // Select the <ul> element and update its content
-      const ulElement = document.getElementById("omega3").querySelector("ul");
-      ulElement.innerHTML = "";
-      for (const key in updatedInfo) {
-        const liElement = document.createElement("li");
-        liElement.innerText = `# ${key}: ${updatedInfo[key]}`;
-        ulElement.appendChild(liElement);
-      }
-
-
-      window.onload = function () {
-        let nameInput = decodeURIComponent(getUrlParameter('name'));
-        let genderInput = decodeURIComponent(getUrlParameter('gender'));
-        let ageInput = decodeURIComponent(getUrlParameter('age'));
-        let illnessInput = decodeURIComponent(getUrlParameter('illness'));
-        let heightInput = decodeURIComponent(getUrlParameter('height'));
-        let weightInput = decodeURIComponent(getUrlParameter('weight'));
-        let bmiInput = decodeURIComponent(getUrlParameter('bmi'));
-        let bmiDotInput = decodeURIComponent(getUrlParameter('bmiDot'));
-
-        let nameValue = document.getElementById('name-value');
-        let genderValue = document.getElementById('gender-value');
-        let ageValue = document.getElementById('age-value');
-        let illnessValue = document.getElementById('illness-value');
-        let heightValue = document.getElementById('height-value');
-        let weightValue = document.getElementById('weight-value');
-        let bmiValue = parseFloat(
-          document.querySelector('#bmi-value').textContent,
-        );
-        //bmiDot
-        const bmiDot = document.getElementById('bmi-dot'); // bmi-dot 요소 가져오기
-        let bmiDotPosition;
-
-        if (bmiDotInput < 18.5) {
-          bmiDotPosition = (bmiDotInput - 0) / (18.5 - 0) * 20;
-        } else if (bmiDotInput >= 18.5 && bmiDotInput < 23) {
-          bmiDotPosition = (bmiDotInput - 18.5) / (23 - 18.5) * 20 + 20;
-        } else if (bmiDotInput >= 23 && bmiDotInput < 25) {
-          bmiDotPosition = (bmiDotInput - 23) / (25 - 23) * 20 + 40;
-        } else if (bmiDotInput >= 25 && bmiDotInput < 30) {
-          bmiDotPosition = (bmiDotInput - 25) / (30 - 25) * 20 + 60;
-        } else {
-          bmiDotPosition = (bmiDotInput - 30) / (50 - 30) * 20 + 80;
-        }
-        bmiDot.style.marginLeft = `${bmiDotPosition}%`;
-
-        document.getElementById('name-value').textContent = nameInput;
-        document.getElementById('gender-value').textContent = genderInput;
-        document.getElementById('age-value').textContent = ageInput;
-        document.getElementById('illness-value').textContent = illnessInput;
-        document.getElementById('height-value').textContent = heightInput;
-        document.getElementById('weight-value').textContent = weightInput;
-        document.getElementById('bmi-value').textContent = bmiInput;
-
-        // URL에서 BMI 값을 추출
-        const urlParams = new URLSearchParams(window.location.search);
-        const bmi = urlParams.get('bmi') ? Number(urlParams.get('bmi')) : document.getElementById("bmi") ? Number(document.getElementById("bmi").textContent) : null;
-
-        if (bmi < 18.5) {
-          document.querySelector(".lv1").classList.add("active");
-        } else if (bmi < 23) {
-          document.querySelector(".lv2").classList.add("active");
-        } else if (bmi < 25) {
-          document.querySelector(".lv3").classList.add("active");
-        } else if (bmi < 30) {
-          document.querySelector(".lv4").classList.add("active");
-        } else {
-          document.querySelector(".lv5").classList.add("active");
-        }
-
-        if (
-          nameValue &&
-          genderValue &&
-          ageValue &&
-          illnessValue &&
-          heightValue &&
-          weightValue &&
-          bmiValue
-        ) {
-          nameValue.textContent = nameInput;
-          genderValue.textContent = genderInput;
-          ageValue.textContent = ageInput;
-          illnessValue.textContent = illnessInput;
-          heightValue.textContent = heightInput;
-          weightValue.textContent = weightInput;
-          bmiValue.textContent = bmiInput;
-
-          let urlParams = new URLSearchParams(window.location.search);
-          let urlName = urlParams.get('name');
-          let UrlGender = urlParams.get('gender');
-          let UrlAge = urlParams.get('age');
-          let UrlIllness = urlParams.get('illness');
-          let UrlHeight = urlParams.get('height');
-          let UrlWeight = urlParams.get('weight');
-          let UrlBmi = urlParams.get('bmi');
-
-          let bmiValueElement = document.getElementById('bmi-value');
-          if (bmiValueElement && UrlBmi) {
-            urlParams.set('bmi', UrlBmi); // update the URL with the original value
-            bmiValueElement.textContent = UrlBmi;
-          } else {
-            console.error(
-              'Element with ID "bmi-value" not found or BMI value not provided in URL!',
-            );
-          }
-        }
-      };
-      const categoryInfo = {
-        blood: '혈액순환',
-        digestion: '소화/장',
-        skin: '피부',
-        // Add more category-value pairs here
-      };
-
-      // 결과를 출력할 위치를 가리키는 요소를 가져옵니다.
-      const resultElement = document.getElementById('illness-value');
-
-      // 카테고리 파라미터를 가져옵니다.
+      // URL에서 illness 값 추출
       const urlParams = new URLSearchParams(window.location.search);
-      const categoriesParam = urlParams.get('category');
-      const categoryValues = categoriesParam ? categoriesParam.split(',') : [];
+      const illness = urlParams.get('illness');
 
-      // 각 카테고리에 대한 정보를 생성하고, 결과 위치에 추가합니다.
-      categoryValues.forEach(category => {
-        const categoryInfoElement = document.createElement('p');
-        categoryInfoElement.textContent = categoryInfo[category];
-        resultElement.appendChild(categoryInfoElement);
-      });
+      const illnessArr = illness.split(',');
+      const illnessArrArr = [illnessArr];
+
+    if (illnessArr.includes('eyes')) {
+      // 코드
+    } else if (illnessArr.includes('joint') && illnessArr.includes('antioxidation')) {
+      // 코드
+    } else if (illnessArr.includes('joint')) {
+      // 코드
+    } else if (illnessArr.includes('antioxidation')) {
+      // 코드
+    } else {
+      console.error(`Could not find the illness: ${illness}`);
+    }
+
+      // HTML 코드 변경
+if (illness === 'eyes') {
+  const jsonDataEyes = jsonData.eyes;
+  const lutein = jsonDataEyes.lutein;
+
+const content = `
+  <div style="overflow: auto;">
+    <h4 style="float: left;">${lutein.name}</h4>
+    <img src="${lutein.image}" alt="${lutein.name}" width="80" height="80" style="float: left; margin-left: 5px;"/>
+  </div>
+  <ul style="clear: both;">
+    ${lutein.description
+      .split('\n')
+      .map(line => `<li>${line}</li>`)
+      .join('')}
+  </ul>
+`;
+
+  const leftDiv = document.querySelector('#omega3 .left');
+  if (!leftDiv) {
+    console.error('Could not find leftDiv for eyes');
+    console.error(new Error().stack);
+  } else {
+    leftDiv.innerHTML = content;
+  }
+}
+      /*joint*/
+      if (illness === 'joint') {
+        const jsonDataJoint = jsonData.joint;
+        const calcium = jsonDataJoint.calcium;
+
+        const content = `
+        <h4>${calcium.name}</h4>
+        <ul>
+          ${calcium.description
+            .split('\n')
+            .map(line => `<li>${line}</li>`)
+            .join('')}
+        </ul>
+      `;
+        const left2Div = document.querySelector('#hyals .left2');
+        if (!left2Div) {
+          console.error('Could not find left2Div for joint');
+          console.error(new Error().stack);
+        } else {
+          left2Div.innerHTML = content;
+        }
+      }
+
+      /* antioxidation */
+      if (illness === 'antioxidation') {
+        const jsonDataAntioxidation = jsonData.antioxidation;
+        const vitaminC = jsonDataAntioxidation.vitaminC;
+
+        const content = `
+    <h4>${vitaminC.name}</h4>
+    <ul>
+      ${vitaminC.description
+        .split('\n')
+        .map(line => `<li>${line}</li>`)
+        .join('')}
+    </ul>
+  `;
+        const left3Div = document.querySelector('#probiotics .left3');
+        if (!left3Div) {
+          console.error('Could not find left3Div for antioxidation');
+          console.error(new Error().stack);
+        } else {
+          left3Div.innerHTML = content;
+        }
+      }
+
+      /*    eyes and joint    */
+         if (illness.includes('eyes') && illness.includes('joint')) {
+        const jsonDataEyes = jsonData.eyes;
+        const lutein = jsonDataEyes.lutein;
+        const jsonDataJoint = jsonData.joint;
+        const calcium = jsonDataJoint.calcium;
+
+        const eyesContent = `
+           <div style="overflow: auto;">
+            <h4 style="float: left;">${lutein.name}</h4>
+            <img src="${lutein.image}" alt="${lutein.name}" width="80" height="80" style="float: left; margin-left: 5px;"/>
+          </div>
+          <ul style="clear: both;">
+            ${lutein.description
+              .split('\n')
+              .map(line => `<li>${line}</li>`)
+              .join('')}
+          </ul>
+        `;
+        const jointContent = `
+          <h4>${calcium.name}</h4>
+          <ul>
+            ${calcium.description
+              .split('\n')
+              .map(line => `<li>${line}</li>`)
+              .join('')}
+          </ul>
+        `;
+
+        const omega3Div = document.querySelector('#omega3 .left');
+        const hyalsDiv = document.querySelector('#hyals .left2');
+
+        if (omega3Div && hyalsDiv) {
+          omega3Div.innerHTML = eyesContent;
+          hyalsDiv.innerHTML = jointContent;
+        }
+      }
+        /*   eyes and anitoxidation     */
+      if (illness.includes('eyes') && illness.includes('antioxidation')) {
+        const jsonDataEyes = jsonData.eyes;
+        const lutein = jsonDataEyes.lutein;
+        const jsonDataAntioxidation = jsonData.antioxidation;
+        const vitaminC = jsonDataAntioxidation.vitaminC;
+
+        const eyesContent = `
+          <div style="overflow: auto;">
+          <h4 style="float: left;">${lutein.name}</h4>
+          <img src="${lutein.image}" alt="${lutein.name}" width="80" height="80" style="float: left; margin-left: 5px;"/>
+        </div>
+        <ul style="clear: both;">
+          ${lutein.description
+            .split('\n')
+            .map(line => `<li>${line}</li>`)
+            .join('')}
+        </ul>
+      `;
+
+        const antioxidationContent = `
+          <h4>${vitaminC.name}</h4>
+          <ul>
+            ${vitaminC.description
+              .split('\n')
+              .map(line => `<li>${line}</li>`)
+              .join('')}
+          </ul>
+        `;
+
+        const omega3Div = document.querySelector('#omega3 .left');
+        const probioticsDiv = document.querySelector('#probiotics .left3');
+
+        if (omega3Div && probioticsDiv) {
+          omega3Div.innerHTML = eyesContent;
+          probioticsDiv.innerHTML = antioxidationContent;
+        }
+      }
+
+     /* joint and antioxidation */
+      if (illness.includes('joint') && illness.includes('antioxidation')) {
+        const jsonDataJoint = jsonData.joint;
+        const calcium = jsonDataJoint.calcium;
+        const jsonDataAntioxidation = jsonData.antioxidation;
+        const vitaminC = jsonDataAntioxidation.vitaminC;
+
+        const jointContent = `
+          <h4>${calcium.name}</h4>
+          <ul>
+            ${calcium.description
+              .split('\n')
+              .map(line => `<li>${line}</li>`)
+              .join('')}
+          </ul>
+        `;
+
+        const antioxidationContent = `
+          <h4>${vitaminC.name}</h4>
+          <ul>
+            ${vitaminC.description
+              .split('\n')
+              .map(line => `<li>${line}</li>`)
+              .join('')}
+          </ul>
+        `;
+        const hyalsDiv = document.querySelector('#hyals .left2');
+        const probioticsDiv = document.querySelector('#probiotics .left3');
+
+        if (hyalsDiv && probioticsDiv) {
+          hyalsDiv.innerHTML = jointContent;
+          probioticsDiv.innerHTML = antioxidationContent;
+        }
+      }
+
+
+/* eyes and joint and antioxidation */
+// If illness includes eyes, joint, or antioxidation
+if (
+  illness.includes('eyes') &&
+  illness.includes('joint') &&
+  illness.includes('antioxidation')
+) {
+  const jsonDataEyes = jsonData.eyes;
+  const lutein = jsonDataEyes.lutein;
+  const jsonDataJoint = jsonData.joint;
+  const calcium = jsonDataJoint.calcium;
+  const jsonDataAntioxidation = jsonData.antioxidation;
+  const vitaminC = jsonDataAntioxidation.vitaminC;
+
+  const eyesContent = `
+   <div style="overflow: auto;">
+      <h4 style="float: left;">${lutein.name}</h4>
+      <img src="${lutein.image}" alt="${lutein.name}" width="80" height="80" style="float: left; margin-left: 5px;"/>
+    </div>
+    <ul style="clear: both;">
+      ${lutein.description
+        .split('\n')
+        .map(line => `<li>${line}</li>`)
+        .join('')}
+    </ul>
+  `;
+  const jointContent = `
+          <h4>${calcium.name}</h4>
+          <ul>
+            ${calcium.description
+              .split('\n')
+              .map(line => `<li>${line}</li>`)
+              .join('')}
+          </ul>
+        `;
+  const antioxidationContent = `
+          <h4>${vitaminC.name}</h4>
+          <ul>
+            ${vitaminC.description
+              .split('\n')
+              .map(line => `<li>${line}</li>`)
+              .join('')}
+          </ul>
+        `;
+  const omega3Div = document.querySelector('#omega3 .left');
+  const hyalsDiv = document.querySelector('#hyals .left2');
+  const probioticsDiv = document.querySelector('#probiotics .left3');
+
+  if (omega3Div && hyalsDiv && probioticsDiv) {
+    omega3Div.innerHTML = eyesContent;
+    hyalsDiv.innerHTML = jointContent;
+    probioticsDiv.innerHTML = antioxidationContent;
+  }
+}
+
+ // Show relevant section and hide others
+  const omega3Section = document.querySelector('#omega3');
+  const hyalsSection = document.querySelector('#hyals');
+  const probioticsSection = document.querySelector('#probiotics');
+
+  console.log('illness:', illness);
+  console.log('omega3Section:', omega3Section);
+  console.log('hyalsSection:', hyalsSection);
+  console.log('probioticsSection:', probioticsSection);
+
+if (!omega3Section || !hyalsSection || !probioticsSection) {
+  console.error('Could not find sections');
+  console.error(new Error().stack);
+} else {
+  if (illness === 'eyes') {
+    omega3Section.classList.remove('hidden');
+    hyalsSection.classList.add('hidden');
+    probioticsSection.classList.add('hidden');
+  } else if (illness === 'joint') {
+    omega3Section.classList.add('hidden');
+    hyalsSection.classList.remove('hidden');
+    probioticsSection.classList.add('hidden');
+  } else if (illness === 'antioxidation') {
+    omega3Section.classList.add('hidden');
+    hyalsSection.classList.add('hidden');
+    probioticsSection.classList.remove('hidden');
+  } else if (illness.includes('eyes') && illness.includes('antioxidation')) {
+    omega3Section.classList.remove('hidden');
+    hyalsSection.classList.add('hidden');
+    probioticsSection.classList.remove('hidden');
+  } else if (illness.includes('eyes') && illness.includes('joint')) {
+    omega3Section.classList.remove('hidden');
+    hyalsSection.classList.remove('hidden');
+    probioticsSection.classList.add('hidden');
+  } else if (illness.includes('joint') && illness.includes('antioxidation')) {
+    omega3Section.classList.add('hidden');
+    hyalsSection.classList.remove('hidden');
+    probioticsSection.classList.remove('hidden');
+  } console.log('illness:', illness);
+if (illness.includes('eyes') && illness.includes('joint') && illness.includes('antioxidation')) {
+  console.log('all conditions met');
+  omega3Section.classList.remove('hidden');
+  hyalsSection.classList.remove('hidden');
+  probioticsSection.classList.remove('hidden');
+}
+
+  console.log('omega3Section after:', omega3Section);
+  console.log('hyalsSection after:', hyalsSection);
+  console.log('probioticsSection after:', probioticsSection);
+}
+
+
+</script>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const selectedIllness = params.get('illness');
+
+/* 다중선택 이미지 */
+const illnesses = ['eyes', 'joint', 'antioxidation'];
+
+illnesses.forEach((illness) => {
+  const recommendedItems = document.querySelectorAll(`[data-illness="${illness}"]`);
+  recommendedItems.forEach((recommendedItem) => {
+    recommendedItem.style.display = 'block';
+  });
+});
+
+const navItems = document.querySelectorAll('.nav-item');
+
+navItems.forEach(item => {
+  item.style.display = 'none';
+});
+
+let recommendedNutrients = [];
+let recommendedTexts = [];
+
+if (selectedIllness.includes('eyes')) {
+  recommendedNutrients.push('lutein');
+  recommendedTexts.push('루테인');
+}
+
+if (selectedIllness.includes('joint')) {
+  recommendedNutrients.push('calcium');
+  recommendedTexts.push('칼슘ㆍ마그네슘');
+}
+
+if (selectedIllness.includes('antioxidation')) {
+  recommendedNutrients.push('vitaminC');
+  recommendedTexts.push('비타민C');
+}
+
+const selectedIllnesses = selectedIllness.split(',').map(i => i.trim());
+
+selectedIllnesses.forEach(selectedIllness => {
+  if (selectedIllness === 'eyes' && !recommendedNutrients.includes('lutein')) {
+    recommendedNutrients.push('lutein');
+    recommendedTexts.push('루테인');
+  }
+  if (selectedIllness === 'joint' && !recommendedNutrients.includes('calcium')) {
+    recommendedNutrients.push('calcium');
+    recommendedTexts.push('칼슘ㆍ마그네슘');
+  }
+  if (selectedIllness === 'antioxidation' && !recommendedNutrients.includes('vitaminC')) {
+    recommendedNutrients.push('vitaminC');
+    recommendedTexts.push('비타민C');
+  }
+});
+
+/* 배열에 있는 값과 일치하는 데이터만 화면에 표시 */
+const recommendedItems = document.querySelectorAll('.nav-item');
+
+recommendedItems.forEach((item) => {
+  if (recommendedNutrients.includes(item.dataset.id)) {
+    item.style.display = 'block';
+  } else {
+    item.style.display = 'none';
+  }
+});
+
+/* 배열의 첫번째 값을 찾아서 active클래스 추가 */
+const navItem = document.querySelector(`[data-id="${recommendedNutrients[0]}"]`);
+
+if (navItem) {
+  navItem.classList.add('active');
+}
+
+/* 단일선택 이미지 */
+const recommendedItem = document.querySelector(`[data-illness="${selectedIllness}"]`);
+
+if (recommendedItem) {
+  recommendedItem.style.display = 'block';
+}
+
+const heading = document.querySelector('.survey-nav h2');
+
+if (heading) {
+  heading.innerHTML = `추천영양성분 <em>${recommendedTexts.join(', ')}</em>`;
+}
 
     </script>
-  </body>
+</body>
 </html>

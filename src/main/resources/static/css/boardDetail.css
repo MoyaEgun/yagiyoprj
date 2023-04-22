@@ -153,8 +153,8 @@ header {
     position: relative;
     width: 100%;
     outline: 1px solid #eee;
-    height: 300px;
-}
+    min-height: 300px;
+  }
 .header .title {
     border-top: 1px solid #000;
     width: 100%;
@@ -204,12 +204,14 @@ header {
 .btn_box button {
     margin-top: 10px;
     cursor: pointer;
-    color: #000;
+    color: #fff;
     width: 200px;
     height: 50px;
     font-size: 25px;
-    border: 1px solid #000;
-    background-color: transparent;
+    background-color: #999;
+}
+.btn_box button:hover {
+    background-color: #5b1a7c;
 }
 #comment-write {
     background-color: #fff;
@@ -281,7 +283,11 @@ table th {
     cursor: pointer;
     text-decoration: none;
     transition: background-color 0.3s ease;
-    background-color: #007bff;
+    background-color: #999;
+}
+
+.comment_btn #comment-write-btn:hover {
+background-color: #5b1a7c;
 }
 
 /* footer */

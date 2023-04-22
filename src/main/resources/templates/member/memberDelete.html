@@ -2,18 +2,33 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>탈퇴화면</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        rel="stylesheet"
+        href="../../static/css/memberDelete.css"
+        th:href="@{/css/memberDelete.css}"
+    />
+<title>탈퇴화면</title>
 </head>
 <body>
-<h3>회원을 탈퇴하실려면 비밀번호를 입력해주세요.</h3>
+
+<div class="delete">
+
+<h1 class="h1">(ㅠ_ㅠ)</h1>
+<h2 class="h2"> 정말로 <span>탈퇴</span>하시겠습니까?</h2>
+<!--<h5>회원을 탈퇴하실려면 비밀번호를 입력해주세요.</h5>-->
 <form th:object="${memberDeleteForm}" method="post" action="">
-    <input type="password" id="pw" name="pw" placeholder="패스워드를 입력해주세요" >
-    <div id="pwError"></div>
+<div class="passwd">
+    <input type="password" id="pw" name="pw" placeholder="회원을 탈퇴하실려면 비밀번호를 입력해주세요." >
+    <div id="pwError">　</div>
+    <button th:onclick="'javascript:history.back()'" type="button">뒤로가기</button><br>
     <button disabled="true" type="submit" id="buttonDel">탈퇴</button>
+</div>
 </form>
 
 <!-- 모달창 추가 -->
-<div id="myModal" class="modal" hidden="true">
+<div id="myModal" class="modal" hidden="true" >
     <div class="modal-content">
         <h4>정말로 탈퇴하시겠습니까?</h4>
         <button id="confirmDel">확인</button>
@@ -59,5 +74,6 @@
         modal.style.display = "none";
     });
 </script>
+</div>
 </body>
 </html>

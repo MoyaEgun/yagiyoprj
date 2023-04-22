@@ -40,6 +40,7 @@ private final CommentSVC commentSVC;
 
     return "redirect:/board/paging";
   }
+
   @GetMapping("/list")
   public String findAll(Model model){
     List<BoardForm> boardList = boardSVC.findAll();
@@ -53,8 +54,8 @@ private final CommentSVC commentSVC;
 //    게시글 데이터를 가져와서 detail.html에 출력
     boardSVC.updateHits(id);
     BoardForm boardForm = boardSVC.findById(id);
-//    List<CommentDTO> commentDTOList = commentSVC.findAll(id);
-//    model.addAttribute("commentList" ,commentDTOList );
+    List<CommentDTO> commentDTOList = commentSVC.findAll(id);
+    model.addAttribute("commentList" ,commentDTOList );
     model.addAttribute("board", boardForm);
     model.addAttribute("page", pageable.getPageNumber());
     return "/board/boardDetail";
@@ -66,13 +67,15 @@ private final CommentSVC commentSVC;
     model.addAttribute("board", boardForm);
     return "/board/boardUpdate";
   }
+
   @PostMapping("/update/{id}")
   public String update(@ModelAttribute BoardForm boardForm,Model model) {
     BoardForm board = boardSVC.update(boardForm);
     model.addAttribute("board", board);
-    return "redirect:/board/paging";
-//    return "redirect:/board/" + boardForm.getId();
+//    return "redirect:/board/paging";
+    return "redirect:/board/" + boardForm.getId();
   }
+
   @GetMapping("/delete/{id}")
   public String delete(@PathVariable Long id){
     boardSVC.delete(id);
@@ -84,16 +87,15 @@ private final CommentSVC commentSVC;
   public String Paging(@PageableDefault(page = 1)Pageable pageable,Model model){
 //    pageable.getPageNumber();
     Page<BoardForm> boardList = boardSVC.paging(pageable);
-    int blockLimit = 3;
+    int blockLimit = 5;
     int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
     int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
 
 
     //page 갯수 20개
-    // 현재 사용자가 3페이지
+    // 현재 사용자가 10페이지
     // 1 2 3
     // 보여지는 페이지 갯수 3개
-    // 총 페이지 갯수 8개
 
     model.addAttribute("boardList", boardList);
     model.addAttribute("startPage", startPage);

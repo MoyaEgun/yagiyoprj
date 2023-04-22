@@ -1,4 +1,4 @@
- @charset "UTF-8";
+@charset "UTF-8";
         * {
             padding: 0px;
             margin: 0px;
@@ -170,7 +170,7 @@
         .row1 input {
             border: none;
         }
-        .row1 input::focus {
+        .row1 input:focus {
             border: none;
         }
         .row textarea {
@@ -195,18 +195,22 @@
             font-size: 15px;
             width: 250px;
             height: 50px;
-            background-color: #007bff;
+            background-color: #999;
             border: none;
             color: #fff;
             cursor: pointer;
             text-decoration: none;
             transition: background-color 0.3s ease;
         }
+        .submit input:hover{
+            background-color: #5b1a7c;
+        }
+    
         .board_paging {
             font-size: 15px;
             width: 250px;
             height: 50px;
-            background-color: #eee;
+            background-color: #999;
             border: 1px solid #000;
             color: #000;
             cursor: pointer;
@@ -214,6 +218,9 @@
             transition: background-color 0.3s ease;
             text-align: center;
             line-height: 50px;
+        }
+        .board_paging:hover{
+            background-color: #5b1a7c;
         }
         .board_paging a {
             display: inline-block;
