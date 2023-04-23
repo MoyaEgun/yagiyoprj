@@ -128,7 +128,7 @@ input[type='checkbox'] {
                     <input
                         id="num2"
                         type="checkbox"
-                        value="307"
+                        value="tablet"
                         class="input-checkbox input-answer"
                         name="answer"
                         data-only="null"
@@ -142,7 +142,7 @@ input[type='checkbox'] {
                     <input
                         id="num3"
                         type="checkbox"
-                        value="308"
+                        value="powder"
                         class="input-checkbox input-answer"
                         name="answer"
                         data-only="null"
@@ -156,7 +156,7 @@ input[type='checkbox'] {
                     <input
                         id="num4"
                         type="checkbox"
-                        value="309"
+                        value="jelly"
                         class="input-checkbox input-answer"
                         name="answer"
                         data-only="null"
@@ -170,7 +170,7 @@ input[type='checkbox'] {
                     <input
                         id="num5"
                         type="checkbox"
-                        value="310"
+                        value="chew ball"
                         class="input-checkbox input-answer"
                         name="answer"
                         data-only="null"
@@ -204,6 +204,7 @@ input[type='checkbox'] {
     </div>
   </div>
 </div>
+<script th:src="@{../js/closeModal.js}"></script>
 <script>
        //카테고리 색상
       const categories = document.querySelectorAll('.category');
@@ -247,7 +248,7 @@ input[type='checkbox'] {
 
 
           let resultURL =
-            'http://localhost:9080/height?name=' +
+            'http://localhost:9080/point?name=' +
             encodeURIComponent(name) +
             '&gender=' +
             encodeURIComponent(gender) +
@@ -260,36 +261,7 @@ input[type='checkbox'] {
           window.location.href = resultURL;
 
         }
-        // 모달
-          let modal = document.getElementById("myModal");
 
-          // Get the <span> element that closes the modal
-          let span = document.getElementsByClassName("close")[0];
-
-          // Get the Yes and No buttons
-          let yesBtn = document.getElementById("yes-btn");
-
-          let noBtn = document.getElementById("no-btn");
-
-          // Open the modal
-          function openModal() {
-            modal.style.display = "block";
-          }
-
-          // When the user clicks on <span> (x), close the modal
-          span.onclick = function() {
-            modal.style.display = "none";
-          }
-
-          // When the user clicks on Yes or No, close the modal and redirect if necessary
-          yesBtn.onclick = function() {
-            modal.style.display = "none";
-            window.location.href = 'http://localhost:9080';
-          }
-
-          noBtn.onclick = function() {
-            modal.style.display = "none";
-          }
         </script>
 </body>
 </html>

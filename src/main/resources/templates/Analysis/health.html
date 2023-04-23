@@ -66,8 +66,6 @@ input[type='radio'] {
   background-position: 50% 50%;
   background-size: 24px;
 }
-
-
   </style>
 </head>
 <body>
@@ -126,7 +124,7 @@ input[type='radio'] {
                         type="radio"
                         class="input-radio input-answer"
                         name="answer"
-                        value="354"
+                        value="5"
                         data-only="null"
                     />
                     <span></span>
@@ -140,7 +138,7 @@ input[type='radio'] {
                         type="radio"
                         class="input-radio input-answer"
                         name="answer"
-                        value="353"
+                        value="5"
                         data-only="null"
                     />
                     <span></span>
@@ -154,7 +152,7 @@ input[type='radio'] {
                         type="radio"
                         class="input-radio input-answer"
                         name="answer"
-                        value="352"
+                        value="3"
                         data-only="null"
                     />
                     <span></span>
@@ -176,7 +174,7 @@ input[type='radio'] {
             <button
                 id="btn-next"
                 class="btn btn-radius btn-dark"
-                onclick="handleNextClick()"
+                onclick="handleNextClick('{{gender}}', '{{name}}', '{{age}}', '{{illness}}', '{{dosage}}', '{{point}}', '{{height}}', '{{weight}}');"
             >
               다음
             </button>
@@ -186,8 +184,9 @@ input[type='radio'] {
     </div>
   </div>
 </div>
+<script th:src="@{../js/closeModal.js}"></script>
     <script>
-          function handleNextClick() {
+          function handleNextClick(defaultGender, defaultName, defaultAge, defaultIllness, defaultDosage, defaultPoint, defaultHeight, defaultWeight) {
             const num1Radio = document.getElementById('num1');
             const num2Radio = document.getElementById('num2');
             const num3Radio = document.getElementById('num3');
@@ -202,40 +201,51 @@ input[type='radio'] {
             } else {
               // Clear error message and navigate to the next page
               errorMsg.textContent = '';
-              window.location.href =
-                'http://localhost:9080/health2';
+
+              nextError.innerHTML = '';
+              const urlParams = new URLSearchParams(window.location.search);
+              const name = urlParams.get('name') || defaultName;
+              const gender = urlParams.get('gender') || defaultGender;
+              const age = urlParams.get('age') || dufaultAGe;
+              let illness = urlParams.get('illness') || defaultIllness;
+              let dosage = urlParams.get('dosage') || defaultDosage;
+              let point = urlParams.get('point') || defaultPoint;
+              const height = urlParams.get('height') || dufaultHeight;
+              const weight = urlParams.get('weight') || dufaultWeight;
+              const bmi = calculateBMI(height, weight);
+              let inputValue = selectedAnswers.join(',');
+
+               // navigate to the result page
+            let resultURL =
+              'http://localhost:9080/health2?name=' +
+              encodeURIComponent(name) +
+              '&gender=' +
+              encodeURIComponent(gender) +
+              '&age=' +
+              encodeURIComponent(age) +
+              '&illness=' +
+              encodeURIComponent(illness) +
+              '&dosage=' +
+              encodeURIComponent(dosage) +
+              '&point=' +
+              encodeURIComponent(point)+
+              '&height=' +
+              encodeURIComponent(height) +
+              '&weight=' +
+              encodeURIComponent(weight) +
+              '&bmi=' +
+              encodeURIComponent(bmi) +
+              '&bmiDot=' +
+              encodeURIComponent(bmi)+
+              '&health=' +
+              encodeURIComponent(weight) ;
+            window.location.href = resultURL;
+            return true;
+
+
             }
           }
-        // 모달
-          let modal = document.getElementById("myModal");
 
-          // Get the <span> element that closes the modal
-          let span = document.getElementsByClassName("close")[0];
-
-          // Get the Yes and No buttons
-          let yesBtn = document.getElementById("yes-btn");
-
-          let noBtn = document.getElementById("no-btn");
-
-          // Open the modal
-          function openModal() {
-            modal.style.display = "block";
-          }
-
-          // When the user clicks on <span> (x), close the modal
-          span.onclick = function() {
-            modal.style.display = "none";
-          }
-
-          // When the user clicks on Yes or No, close the modal and redirect if necessary
-          yesBtn.onclick = function() {
-            modal.style.display = "none";
-            window.location.href = 'http://localhost:9080';
-          }
-
-          noBtn.onclick = function() {
-            modal.style.display = "none";
-          }
         </script>
 
 </body>

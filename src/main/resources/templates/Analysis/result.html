@@ -339,12 +339,13 @@ function saveScreenshot() {
     document.body.removeChild(link);
 
     // Show the button menu again
-    buttonWrap.style.display = 'btn-wrap';
+    buttonWrap.style.display = 'block'; // set to 'inline-block' if needed
   });
 }
 
 // Connect the saveScreenshot function to the button click event handler
-document.querySelector('.btn-screenshot').addEventListener('click', saveScreenshot);
+   document.querySelector('.btn-screenshot').addEventListener('click', saveScreenshot);
+
 </script>
 <script>
   // Get the button element

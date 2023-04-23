@@ -96,7 +96,7 @@
             <button
                 id="btn-next"
                 class="btn btn-radius btn-dark"
-                onclick="nextBtn('{{gender}}', '{{name}}', '{{age}}', '{{illness}}', '{{dosage}}');"
+                onclick="nextBtn('{{gender}}', '{{name}}', '{{age}}', '{{illness}}', '{{dosage}}', '{{point}}');"
             >
               다음
             </button>
@@ -106,8 +106,9 @@
     </div>
   </div>
 </div>
+<script th:src="@{../js/closeModal.js}"></script>
 <script>
-function nextBtn(defaultGender, defaultName, defaultAge, defaultIllness, defaultDosage) {
+function nextBtn(defaultGender, defaultName, defaultAge, defaultIllness, defaultDosage, defaultPoint) {
   let nextInput = document.getElementById('centimeter');
   let nextError = document.getElementById('next-error');
   let inputValue = nextInput.value.trim();
@@ -119,6 +120,9 @@ function nextBtn(defaultGender, defaultName, defaultAge, defaultIllness, default
   } else if (!/^\d+$/.test(inputValue)) {
     nextError.innerHTML = '숫자만 입력해주세요';
     return false;
+  } else if (inputValue < 50 || inputValue > 250) {
+              nextError.innerHTML = '50부터 250까지만 입력할 수 있습니다';
+              return false;
   } else {
     const heightElement = document.querySelector('#height');
     if (heightElement) {
@@ -134,6 +138,7 @@ function nextBtn(defaultGender, defaultName, defaultAge, defaultIllness, default
     let age = urlParams.get('age') || defaultAge;
     let illness = urlParams.get('illness') || defaultIllness;
     let dosage = urlParams.get('dosage') || defaultDosage;
+    let point = urlParams.get('point') || defaultPoint;
 
     let resultURL =
       'http://localhost:9080/weight?name=' +
@@ -146,6 +151,8 @@ function nextBtn(defaultGender, defaultName, defaultAge, defaultIllness, default
       encodeURIComponent(illness) +
       '&dosage=' +
       encodeURIComponent(dosage) +
+      '&point=' +
+      encodeURIComponent(point)+
       '&height=' +
       encodeURIComponent(inputValue);
 
@@ -153,37 +160,6 @@ function nextBtn(defaultGender, defaultName, defaultAge, defaultIllness, default
     return true;
   }
 }
-// 모달
-            let modal = document.getElementById("myModal");
-
-            // Get the <span> element that closes the modal
-            let span = document.getElementsByClassName("close")[0];
-
-            // Get the Yes and No buttons
-            let yesBtn = document.getElementById("yes-btn");
-
-            let noBtn = document.getElementById("no-btn");
-
-            // Open the modal
-            function openModal() {
-              modal.style.display = "block";
-            }
-
-            // When the user clicks on <span> (x), close the modal
-            span.onclick = function() {
-              modal.style.display = "none";
-            }
-
-            // When the user clicks on Yes or No, close the modal and redirect if necessary
-            yesBtn.onclick = function() {
-              modal.style.display = "none";
-              window.location.href = 'http://localhost:9080';
-            }
-
-            noBtn.onclick = function() {
-              modal.style.display = "none";
-            }
-
         </script>
-</body>
+  </body>
 </html>

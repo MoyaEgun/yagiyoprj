@@ -248,6 +248,7 @@
     </div>
   </div>
 </div>
+<script th:src="@{../js/closeModal.js}"></script>
 <script>
 // 최대 3개 선택
 const checkboxes = document.getElementsByName('answer');
@@ -284,31 +285,6 @@ const urlParams = new URLSearchParams(window.location.search);
 const categoriesParam = urlParams.get('category');
 const categoryValues = categoriesParam ? categoriesParam.split(',') : [];
 
-<!--const categoryInfo = {-->
-<!--  blood: '혈액순환',-->
-<!--  digestion: '소화/장',-->
-<!--  skin: '피부',-->
-<!--  // Add more category-value pairs here-->
-<!--};-->
-
-<!--categoryValues.forEach(category => {-->
-<!--  switch (category) {-->
-<!--    case 'blood':-->
-<!--      // Display information about blood circulation-->
-<!--      console.log(categoryInfo.blood);-->
-<!--      break;-->
-<!--    case 'digestion':-->
-<!--      // Display information about digestion-->
-<!--      console.log(categoryInfo.digestion);-->
-<!--      break;-->
-<!--    case 'skin':-->
-<!--      // Display information about skin health-->
-<!--      console.log(categoryInfo.skin);-->
-<!--      break;-->
-<!--    // Add more cases for other categories-->
-<!--  }-->
-<!--});-->
-
 function handleNextClick(defaultGender, defaultName, defaultAge) {
   // check if at least one checkbox is selected
   const checkboxes = document.getElementsByName('answer');
@@ -343,37 +319,6 @@ function handleNextClick(defaultGender, defaultName, defaultAge) {
     encodeURIComponent(inputValue);
   window.location.href = resultURL;
 }
-// 모달
-            let modal = document.getElementById("myModal");
-
-            // Get the <span> element that closes the modal
-            let span = document.getElementsByClassName("close")[0];
-
-            // Get the Yes and No buttons
-            let yesBtn = document.getElementById("yes-btn");
-
-            let noBtn = document.getElementById("no-btn");
-
-            // Open the modal
-            function openModal() {
-              modal.style.display = "block";
-            }
-
-            // When the user clicks on <span> (x), close the modal
-            span.onclick = function() {
-              modal.style.display = "none";
-            }
-
-            // When the user clicks on Yes or No, close the modal and redirect if necessary
-            yesBtn.onclick = function() {
-              modal.style.display = "none";
-              window.location.href = 'http://localhost:9080';
-            }
-
-            noBtn.onclick = function() {
-              modal.style.display = "none";
-            }
-
 
        </script>
   </body>

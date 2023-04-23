@@ -171,22 +171,7 @@ input[type='checkbox'] {
                         type="checkbox"
                         class="input-checkbox input-answer"
                         name="answer"
-                        value="370"
-                        data-only="null"
-                    />
-                    <span></span>
-                    술을 많이 마신다(일주일에 소주 3병 이상 또는
-                    맥주5000cc이상)
-                  </label>
-                </li>
-                <li>
-                  <label class="label-radio label-question">
-                    <input
-                        id="num2"
-                        type="checkbox"
-                        class="input-checkbox input-answer"
-                        name="answer"
-                        value="375"
+                        value="0"
                         data-only="null"
                     />
                     <span></span>
@@ -196,11 +181,11 @@ input[type='checkbox'] {
                 <li>
                   <label class="label-radio label-question">
                     <input
-                        id="num3"
+                        id="num2"
                         type="checkbox"
                         class="input-checkbox input-answer"
                         name="answer"
-                        value="376"
+                        value="0"
                         data-only="null"
                     />
                     <span></span>
@@ -210,11 +195,11 @@ input[type='checkbox'] {
                 <li>
                   <label class="label-radio label-question">
                     <input
-                        id="num4"
+                        id="num3"
                         type="checkbox"
                         class="input-checkbox input-answer"
                         name="answer"
-                        value="480"
+                        value="1"
                         data-only="null"
                     />
                     <span></span>
@@ -224,11 +209,11 @@ input[type='checkbox'] {
                 <li>
                   <label class="label-radio label-question">
                     <input
-                        id="num5"
+                        id="num4"
                         type="checkbox"
                         class="input-checkbox input-answer"
                         name="answer"
-                        value="378"
+                        value="0"
                         data-only="null"
                     />
                     <span></span>
@@ -238,11 +223,11 @@ input[type='checkbox'] {
                 <li>
                   <label class="label-radio label-question">
                     <input
-                        id="num6"
+                        id="num5"
                         type="checkbox"
                         class="input-checkbox input-answer"
                         name="answer"
-                        value="481"
+                        value="1"
                         data-only="null"
                     />
                     <span></span>
@@ -256,7 +241,7 @@ input[type='checkbox'] {
                         class="input-checkbox input-answer"
                         name="answer"
                         id="none"
-                        value="379"
+                        value="0"
                         data-only="1"
                     />
                     <span></span>
@@ -315,7 +300,6 @@ input[type='checkbox'] {
         const num3Radio = document.getElementById('num3');
         const num4Radio = document.getElementById('num4');
         const num5Radio = document.getElementById('num5');
-        const num6Radio = document.getElementById('num6');
         const noneRadio = document.getElementById('none');
         const errorMsg = document.querySelector('.survey-errormsg');
 
@@ -325,7 +309,6 @@ input[type='checkbox'] {
           !num3Radio.checked &&
           !num4Radio.checked &&
           !num5Radio.checked &&
-          !num6Radio.checked &&
           !noneRadio.checked
         ) {
           errorMsg.textContent = '답변을 입력하세요!';

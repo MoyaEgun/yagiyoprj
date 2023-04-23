@@ -89,6 +89,7 @@
     </div>
   </div>
 </div>
+<script th:src="@{../js/closeModal.js}"></script>
 <script >
       function getUrlParameter(name) {
         name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -99,6 +100,11 @@
       function validateName() {
         let nameInput = document.getElementById('name');
         let nameError = document.getElementById('name-error');
+      // Remove any characters that are not Korean or English characters
+            nameInput.value = nameInput.value.replace(
+              /[^ㄱ-ㅎ가-힣a-zA-Z]/g,
+              '',
+            );
         if (nameInput.value.trim() === '') {
           nameError.innerHTML = '이름을 입력해주세요';
           return false;
@@ -118,37 +124,6 @@
           console.error('Element with ID "name-value" not found!');
         }
       };
-            // 모달
-            let modal = document.getElementById("myModal");
-
-            // Get the <span> element that closes the modal
-            let span = document.getElementsByClassName("close")[0];
-
-            // Get the Yes and No buttons
-            let yesBtn = document.getElementById("yes-btn");
-
-            let noBtn = document.getElementById("no-btn");
-
-            // Open the modal
-            function openModal() {
-              modal.style.display = "block";
-            }
-
-            // When the user clicks on <span> (x), close the modal
-            span.onclick = function() {
-              modal.style.display = "none";
-            }
-
-            // When the user clicks on Yes or No, close the modal and redirect if necessary
-            yesBtn.onclick = function() {
-              modal.style.display = "none";
-              window.location.href = 'http://localhost:9080';
-            }
-
-            noBtn.onclick = function() {
-              modal.style.display = "none";
-            }
  </script>
-
 </body>
 </html>

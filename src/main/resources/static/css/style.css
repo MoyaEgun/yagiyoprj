@@ -61,6 +61,32 @@ body {
     margin: 0 auto;
 }
 
+#scrollToTopBtn {
+    cursor: pointer;
+    width: 50px;
+    bottom: 70px;
+    height: 50px;
+    position: fixed;
+    z-index: 1;
+    right: 0;
+    margin: 50px;
+    border: none;
+    background-image: url(../img/top.png);
+    background-size: cover;
+    background-color: inherit;
+}
+#add-channel-button {
+    z-index: 99999;
+    margin: 50px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+#add-channel-button img {
+    width: 50px;
+    height: 50px;
+}
+
 /* Header */
 
 header {
@@ -141,23 +167,21 @@ header {
     top: -7px;
     left: 74px;
 }
-.gnb_box > .mypage a{
-    display:block;
+.gnb_box > .mypage a {
+    display: block;
     position: relative;
     margin-left: 40px;
-    height:30px;
+    height: 30px;
 }
 .gnb_box > .mypage a::before {
- padding-top: 5px;
+    padding-top: 5px;
     content: "";
     position: absolute;
     width: 0;
     bottom: 0;
     background-color: #000;
     transition: width 0.25s ease;
-
 }
-
 .gnb_box > .mypage a:hover::before {
     width: 65px;
 }
@@ -209,17 +233,9 @@ header {
 .gnb_box > a:hover::before {
     width: 100%;
 }
+
 /*  M  a  i  n */
 
-main::before {
-    width: 100%;
-    position: absolute;
-    height: 1px;
-    content: "";
-    background-color: #bbbbbb;
-    opacity: 50%;
-    margin-top: -20px;
-}
 main {
     position: relative;
     width: 100%;
@@ -227,19 +243,13 @@ main {
 }
 
 /* 메인-헤더 배경화면 */
-.main_visual {
-    margin: 0px auto;
-    width: 100%;
-    height: 1000px;
-    background-image: url(../img/main_visual.png);
-    height: 500px;
-    background-size: cover;
-}
+
 .swiper {
-    width: 100%;
+    width: 1280px;
     height: 100%;
 }
 .swiper-slide {
+    width: 1280px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -249,15 +259,33 @@ main {
     animation: titleMotion 3s ease-out;
 }
 
+.main_visual {
+    margin: 0 auto;
+    width: 1010px;
+    height: 500px;
+    background-image: url(../img/main_visual03.jpg);
+    border-radius: 20px;
+    background-size: cover;
+}
+
 .main_visual .text1 {
     text-align: center;
     position: absolute;
     opacity: 0;
     font-family: "pretendard", sans-serif;
     font-weight: 800;
-    font-size: 60px;
-    left: 700px;
-    top: 250px;
+    font-size: 50px;
+    left: -163px;
+    top: 350px;
+}
+.main_visual .text2 {
+    text-align: center;
+    position: absolute;
+    font-family: "pretendard", sans-serif;
+    font-weight: 800;
+    font-size: 25px;
+    left: 108px;
+    top: 88px;
 }
 
 /* 건강설문조사  버튼*/
@@ -273,8 +301,8 @@ main {
     padding: 0;
     overflow: visible;
     cursor: pointer;
-    top: 150px;
-    left: 750px;
+    top: 209px;
+    left: 113px;
     animation: bounce-effect 0.8s alternate ease-in-out infinite;
     font-size: 30px;
     font-weight: 600;
@@ -283,18 +311,21 @@ main {
 /* Section */
 
 .nutrients_wrap {
+    display: flex;
     position: relative;
     width: 1280px;
-    margin: 0 auto;
+    margin: 150px auto 150px auto;
+    flex-direction: column;
 }
-.section_text {
+.nutrients_wrap .section_text {
     display: flex;
     position: inline;
-    margin: 20px auto;
+    margin: 60px auto;
     justify-content: center;
     width: 300px;
     font-size: 20px;
     font-weight: 600;
+    line-height: 20px;
 }
 .img_box {
     width: 1280px;
@@ -307,7 +338,7 @@ main {
     justify-content: center;
     align-items: center;
     flex: 10%;
-    outline: 1px solid #bbbbbb;
+    outline: 1px solid #000;
     border-radius: 10px;
     width: 100px;
     height: 100px;
@@ -315,9 +346,8 @@ main {
     box-shadow: 0px 5px 10px rgba(70, 56, 147, 0.1);
 }
 .img_box .ingredient:hover {
-    outline: 5px solid #bbbbbb;
+    outline: 1px solid #110dff;
     font-weight: bold;
-    box-shadow: 5px 10px 5px 5px rgba(100, 100, 100, 0.1);
 }
 .img_box div p {
     font-size: 20px;
@@ -332,10 +362,23 @@ main {
     font-weight: bold;
 }
 /* 건강에 따른 성분 */
-.health_contents{
-position:relative;
-width:1280px;
-margin:0 auto;
+.health_contents {
+    position: relative;
+    width: 1280px;
+    margin: 50px auto 240px auto;
+}
+.health_contents .section_text {
+    display: flex;
+    position: inline;
+    margin: 20px auto;
+    justify-content: center;
+    width: 300px;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 20px;
+    left: 487px;
+    top: 30px;
+    position: absolute;
 }
 .health_wrap {
     position: relative;
@@ -358,30 +401,39 @@ margin:0 auto;
 }
 .health_box {
     display: flex;
+    padding-left:50px;
+    height:200px;
 }
 .health_icon {
     display: flex;
     justify-content: center;
     align-items: center;
-    outline: 1px solid #ffdada;
-    border-radius: 30px;
-    width: 100px;
-    height: 100px;
-    background-color: #f2f2f2;
+    outline: 1px solid #000000;
+    border-radius: 255px;
+    width: 150px;
+    height: 150px;
+    background-color: #fff;
     box-shadow: 0px 5px 10px rgba(70, 56, 147, 0.1);
-    margin: 4px;
     text-align: center;
 }
 .health_icon:hover {
-    outline: 5px solid #bbbbbb;
+    outline: 1px solid #110dff;
     font-weight: bold;
-    box-shadow: 5px 10px 5px 5px rgba(100, 100, 100, 0.1);
+}
+.health_icon span {
+    display: none;
 }
 /* Article 기사 */
 
 article {
     width: 1280px;
     margin: 100px auto;
+}
+.article_contents {
+    margin-top: 50px;
+}
+.article_text {
+    font-size: 50px;
 }
 article::before {
     width: 1280px;
@@ -395,20 +447,23 @@ section {
     display: flex;
 }
 article section img {
-    width: 400px;
-    height: 300px;
+    width: 600px;
+    height: 100%;
     border-radius: 10px;
     display: flex;
 }
 article section .side-content {
     flex-direction: column;
     margin: 30px;
+    display: flex;
+    justify-content: center;
 }
 article section span {
-    outline: 1px solid #999;
-    border-radius: 10px;
     font-size: 15px;
-    color: #999;
+    padding: 10px;
+    outline: 1px solid #999;
+    font-size: 15px;
+    color: #000;
     padding: 10px;
 }
 article section .content {
@@ -416,74 +471,87 @@ article section .content {
 }
 .side-content .title {
     margin-top: 20px;
+    font-size: 20px;
+    padding-left: 10px;
 }
 
-/*footer*/
-footer {
-  width: 100%;
-  background-color: #2d3142;
+/* companies */
+.companies {
+    text-align: center;
+    width: 1280px;
+    margin: 0 auto;
+    border-top: 1px solid #eee;
+    height: 400px;
+}
+.companies .text {
+    margin: 40px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+}
+.companies img {
+    width: 200px;
+    height: 100%;
+}
+.companies div {
+    display: inline-block;
+    margin-bottom: 250px;
+}
 
+/* footer */
+
+footer {
+    width: 100%;
+    background-color: #2d3142;
 }
 
 .footer_area {
-  width: 1280px;
-  color: #999;
-  margin: 0 auto;
-
+    width: 1280px;
+    color: #999;
+    margin: 0 auto;
 }
 
 /* footer top */
 
 .footer_area .top {
-  width: 100%;
-  display: flex;
-  margin: 0 auto;
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
 }
 
 /* 푸터 로고 이미지 */
 .footer_img {
-  width: 150px;
-  display: flex;
-  margin: 10px;
+    width: 150px;
+    display: flex;
+    margin: 10px;
 }
 .footer_menu {
-  display: flex;
-  margin-top: 20px;
+    display: flex;
+    margin-top: 20px;
 }
 .footer_menu a {
-  display: flex;
-  padding-left: 10px;
-}
-
-.footer_area .bottom {
+    display: flex;
+    padding-left: 10px;
 }
 
 .footer_area .bottom .info {
-  width: 1280px;
-  text-align: left;
-
+    width: 1280px;
+    text-align: left;
 }
 .bottom .info .title {
-  font-size: 20px;
-  padding-left: 30px
+    font-size: 20px;
+    padding-left: 30px;
 }
 
 /* copyright */
 .footer_area .copyright {
-  margin-left: 20px;
-  text-align: center;
-  font-size: 15px;
-  padding: 10px;
+    margin-left: 20px;
+    text-align: center;
+    font-size: 15px;
+    padding: 10px;
 }
 
-/* .footer_area .copyright::before {
-  width: 100%;
-  position: absolute;
-  height: 1px;
-  content: '';
-  background-color: #bbbbbb;
-} */
 .footer_area .copyright p {
-  width: 100%;
-  text-align: left;
+    width: 100%;
+    text-align: left;
 }

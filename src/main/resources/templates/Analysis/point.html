@@ -116,7 +116,7 @@ input[type='checkbox'] {
                     <input
                         id="num1"
                         type="checkbox"
-                        value="312"
+                        value="material"
                         class="input-checkbox input-answer"
                         name="answer"
                         data-only="null"
@@ -129,7 +129,7 @@ input[type='checkbox'] {
                     <input
                         id="num2"
                         type="checkbox"
-                        value="312"
+                        value="lowprice"
                         class="input-checkbox input-answer"
                         name="answer"
                         data-only="null"
@@ -155,7 +155,7 @@ input[type='checkbox'] {
                     <input
                         id="num4"
                         type="checkbox"
-                        value="314"
+                        value="amount"
                         class="input-checkbox input-answer"
                         name="answer"
                         data-only="null"
@@ -168,7 +168,7 @@ input[type='checkbox'] {
                     <input
                         id="num5"
                         type="checkbox"
-                        value="315"
+                        value="overseas"
                         class="input-checkbox input-answer"
                         name="answer"
                         data-only="null"
@@ -181,7 +181,7 @@ input[type='checkbox'] {
                     <input
                         id="num6"
                         type="checkbox"
-                        value="316"
+                        value="oneday"
                         class="input-checkbox input-answer"
                         name="answer"
                         data-only="null"
@@ -204,7 +204,7 @@ input[type='checkbox'] {
             <button
                 id="btn-next"
                 class="btn btn-radius btn-dark"
-                onclick="handleNextClick()"
+                onclick="handleNextClick('{{gender}}', '{{name}}', '{{age}}', '{{illness}}', '{{dosage}}')"
             >
               다음
             </button>
@@ -214,6 +214,7 @@ input[type='checkbox'] {
     </div>
   </div>
 </div>
+<script th:src="@{../js/closeModal.js}"></script>
 <script>
       //최대 3개 선택
       const checkboxes = document.getElementsByName('answer');
@@ -226,7 +227,6 @@ input[type='checkbox'] {
           } else {
             checkedCount--;
           }
-
           if (checkedCount > 3) {
             event.target.checked = false;
             checkedCount--;
@@ -246,16 +246,17 @@ input[type='checkbox'] {
         });
       });
       //에러메시지
-      function handleNextClick() {
+      function handleNextClick(defaultGender, defaultName, defaultAge, defaultIllness, defaultDosage) {
         // check if at least one checkbox is selected
         const checkboxes = document.getElementsByName('answer');
         let isChecked = false;
+        let selectedAnswers = [];
         for (let i = 0; i < checkboxes.length; i++) {
           if (checkboxes[i].checked) {
             isChecked = true;
-            break;
-          }
+          selectedAnswers.push(checkboxes[i].value); // Add the value of the selected checkbox to the array
         }
+      }
 
         // display error message if no checkbox is selected
         if (!isChecked) {
@@ -265,39 +266,30 @@ input[type='checkbox'] {
         }
 
         // continue to the next question
-         window.location.href =
-          'http://localhost:9080/height';
-      }
-    // 모달
-          let modal = document.getElementById("myModal");
+         let urlParams = new URLSearchParams(window.location.search);
+          let name = urlParams.get('name') || defaultName;
+          let gender = urlParams.get('gender') || defaultGender;
+          let age = urlParams.get('age') || defaultAge;
+          let illness = urlParams.get('illness') || defaultIllness;
+          let dosage = urlParams.get('dosage') || defaultDosage;
+          let inputValue = selectedAnswers.join(',');
 
-          // Get the <span> element that closes the modal
-          let span = document.getElementsByClassName("close")[0];
+          let resultURL =
+            'http://localhost:9080/height?name=' +
+            encodeURIComponent(name) +
+            '&gender=' +
+            encodeURIComponent(gender) +
+            '&age=' +
+            encodeURIComponent(age) +
+            '&illness=' +
+            encodeURIComponent(illness) +
+            '&dosage=' +
+            encodeURIComponent(dosage) +
+             '&point=' +
+            encodeURIComponent(inputValue);
+          window.location.href = resultURL;
 
-          // Get the Yes and No buttons
-          let yesBtn = document.getElementById("yes-btn");
-
-          let noBtn = document.getElementById("no-btn");
-
-          // Open the modal
-          function openModal() {
-            modal.style.display = "block";
-          }
-
-          // When the user clicks on <span> (x), close the modal
-          span.onclick = function() {
-            modal.style.display = "none";
-          }
-
-          // When the user clicks on Yes or No, close the modal and redirect if necessary
-          yesBtn.onclick = function() {
-            modal.style.display = "none";
-            window.location.href = 'http://localhost:9080';
-          }
-
-          noBtn.onclick = function() {
-            modal.style.display = "none";
-          }
+        }
         </script>
-</body>
+    </body>
 </html>
