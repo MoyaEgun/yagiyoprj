@@ -36,6 +36,7 @@ margin:0 auto;
 width:100%;
 text-align:center;
 margin:0 auto;
+margin-bottom: 20px;
 }
 .content .email > input{
 border-radius:10px;
@@ -44,11 +45,22 @@ height:50px;
 padding-left:5px;
 }
 
+.findId{
+border-radius:10px;
+outline: 2px solid black;
+padding-left: 147px;
+padding-right: 147px;
+padding-top: 10px;
+padding-bottom: 10px;
+margin-top: 30px;
+}
+
 .content .id{
 width:100%;
 text-align:center;
 margin:0 auto;
 }
+
 .content .id > input{
 border-radius:10px;
 width:340px;

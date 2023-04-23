@@ -25,7 +25,7 @@
             </div>
             <div th:if="${findIdForm.id}">
                 <label for="id"></label>
-                <span th:text="${findIdForm.id}"></span>
+                <span class="findId" th:text="${findIdForm.id == null or findIdForm.id == '' ? 'Retry' : findIdForm.id}"></span>
             </div>
             <div class="btn"><button type="submit">아이디 찾기</button></div>
             <div class="text-box">

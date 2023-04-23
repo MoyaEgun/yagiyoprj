@@ -10,146 +10,216 @@
     </head>
     <style>
         @charset "UTF-8";
-        * {
-            padding: 0px;
-            margin: 0px;
-            text-decoration: none;
-            list-style: none;
-            color: inherit;
-            font-family: "pretendard", sans-serif;
-        }
+       * {
+    padding: 0px;
+    margin: 0px;
+    text-decoration: none;
+    list-style: none;
+    color: inherit;
+    font-family: "pretendard", sans-serif;
+}
 
-        @import url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap");
 
-        body {
-            width: 100%;
-        }
+@keyframes slide {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+@keyframes titleMotion {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-        .wrapper {
-            width: 100%;
-            margin: 0 auto;
-        }
+    50% {
+        opacity: 1; /* keep opacity at 100% */
+        transform: translateY(0);
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+}
 
-        /* Header */
+@keyframes bounce-effect {
+    0% {
+        transform: translateY(0);
+        animation-timing-function: ease-in;
+    }
+    50% {
+        transform: translateY(-7px);
+        animation-timing-function: ease-out;
+    }
+    100% {
+        transform: translateY(0);
+        animation-timing-function: ease-in;
+    }
+}
 
-        header {
-            width: 100%;
-            position: fixed;
-            z-index: 999;
-            background-color: #fff;
-            top: 0;
-        }
-        .top {
-            width: 1280px;
-            height: 100px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+body {
+    width: 100%;
+}
 
-        /* 로고이미지 */
-        .logo {
-            margin-top: 15px;
-        }
-        .top .logo > a img {
-            width: 150px;
-        }
+.wrapper {
+    width: 100%;
+    margin: 0 auto;
+}
 
-        /* 검색 */
-        .top .search_box {
-            display: flex;
-            height: 30px;
-        }
-        .search_box form {
-            display: inline-block;
-            position: relative;
-            width: 553px;
-            height: 48px;
-            border-radius: 24px;
-            border: 2px solid #067dfd;
-            box-sizing: border-box;
-            vertical-align: top;
-        }
-        .search_box input {
-            width: 400px;
-            height: 20px;
-            outline: transparent;
-            border: 0;
-            margin: 12px 17px 17px 17px;
-            padding-left: 5px;
-        }
-        .search_box button {
-            left: 510px;
-            bottom: 8px;
-            right: 0px;
-            background-color: inherit;
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            border: none;
-            box-shadow: none;
-            cursor: pointer;
-            background-image: url(../img/search.png);
-            background-size: cover;
-        }
+/* Header */
 
-        /* 탑메뉴 */
-        .top .gnb_box {
-            display: flex;
-            position: relative;
-            font-weight: 600;
-            height: 30px;
-            margin-top: 20px;
-        }
+header {
+    width: 100%;
+    position: fixed;
+    z-index: 999;
+    background-color: #fff;
+    top: 0;
+    border-bottom: 1px solid #eee;
+}
+.top {
+    width: 1280px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .gnb_box > a {
-            position: relative;
-            margin-left: 40px;
-        }
-        .gnb_box .login,
-        .logout {
-            margin-left: 40px;
-        }
+/* 로고이미지 */
+.logo {
+    margin-top: 15px;
+}
+.top .logo > a img {
+    width: 150px;
+}
 
-        .gnb_box .login a::before {
-            padding-top: 5px;
-            content: "";
-            position: absolute;
-            width: 0;
-            bottom: 0;
-            background-color: #000;
-            transition: width 0.25s ease;
-        }
-        .gnb_box .login a:hover::before {
-            width: 40px;
-        }
-        .gnb_box .logout a::before {
-            padding-top: 5px;
-            content: "";
-            position: absolute;
-            width: 0;
-            bottom: 0;
-            background-color: #000;
-            transition: width 0.25s ease;
-        }
-        .gnb_box .logout a:hover::before {
-            width: 55px;
-        }
-        .gnb_box > a::before {
-            padding-top: 5px;
-            content: "";
-            position: absolute;
-            width: 0;
-            bottom: 0;
-            left: 0;
-            background-color: #000;
-            transition: width 0.25s ease;
-        }
+/* 검색 */
+.top .search_box {
+    display: flex;
+    height: 30px;
+}
+.search_box form {
+    display: inline-block;
+    position: relative;
+    width: 553px;
+    height: 48px;
+    border-radius: 24px;
+    border: 1px solid #067dfd;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+.search_box input {
+    width: 400px;
+    height: 20px;
+    outline: transparent;
+    border: 0;
+    margin: 12px 17px 17px 17px;
+    padding-left: 5px;
+}
+.search_box button {
+    left: 510px;
+    bottom: 8px;
+    right: 0px;
+    background-color: inherit;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    background-image: url(../img/search.png);
+    background-size: cover;
+}
 
-        .gnb_box > a:hover::before {
-            width: 100%;
-        }
+/* 탑메뉴 */
+.gnb_box {
+    display: flex;
+    position: relative;
+    font-weight: 600;
+    height: 30px;
+    margin-top: 20px;
+}
+.gnb_box span {
+    position: absolute;
+    color: #ff5c35;
+    font-size: 10px;
+    top: -7px;
+    left: 74px;
+}
+.gnb_box > .mypage a{
+    display:block;
+    position: relative;
+    margin-left: 40px;
+    height:30px;
+}
+.gnb_box > .mypage a::before {
+ padding-top: 5px;
+    content: "";
+    position: absolute;
+    width: 0;
+    bottom: 0;
+    background-color: #000;
+    transition: width 0.25s ease;
+
+}
+
+.gnb_box > .mypage a:hover::before {
+    width: 65px;
+}
+
+.gnb_box > a {
+    position: relative;
+    margin-left: 40px;
+}
+.gnb_box .login,
+.logout {
+    margin-left: 40px;
+}
+
+.gnb_box .login a::before {
+    padding-top: 5px;
+    content: "";
+    position: absolute;
+    width: 0;
+    bottom: 0;
+    background-color: #000;
+    transition: width 0.25s ease;
+}
+.gnb_box .login a:hover::before {
+    width: 40px;
+}
+.gnb_box .logout a::before {
+    padding-top: 5px;
+    content: "";
+    position: absolute;
+    width: 0;
+    bottom: 0;
+    background-color: #000;
+    transition: width 0.25s ease;
+}
+.gnb_box .logout a:hover::before {
+    width: 55px;
+}
+.gnb_box > a::before {
+    padding-top: 5px;
+    content: "";
+    position: absolute;
+    width: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    transition: width 0.25s ease;
+}
+
+.gnb_box > a:hover::before {
+    width: 100%;
+}
 
         .save_box {
             position: relative;
@@ -237,103 +307,122 @@
             width: 100%;
             height: 100%;
         }
-        footer {
-            width: 100%;
-            background-color: #2d3142;
-        }
 
-        .footer_area {
-            width: 1280px;
-            color: #999;
-            margin: 0 auto;
-        }
+footer {
+  width: 100%;
+  background-color: #2d3142;
+    position: fixed;
+    bottom: 0;
 
-        /* footer top */
+}
 
-        .footer_area .top {
-            width: 100%;
-            display: flex;
-            margin: 0 auto;
-        }
+.footer_area {
+  width: 1280px;
+  color: #999;
+  margin: 0 auto;
 
-        /* 푸터 로고 이미지 */
-        .footer_img {
-            width: 150px;
-            display: flex;
-            margin: 10px;
-        }
-        .footer_menu {
-            display: flex;
-            margin-top: 20px;
-        }
-        .footer_menu a {
-            display: flex;
-            padding-left: 10px;
-        }
+}
 
-        .footer_area .bottom .info {
-            width: 1280px;
-            text-align: left;
-        }
-        .bottom .info .title {
-            font-size: 20px;
-        }
+/* footer top */
 
-        /* copyright */
-        .footer_area .copyright {
-            margin-left: 20px;
-        }
+.footer_area .top {
+  width: 100%;
+  display: flex;
+  margin: 0 auto;
+}
 
-        /* .footer_area .copyright::before {
+/* 푸터 로고 이미지 */
+.footer_img {
+  width: 150px;
+  display: flex;
+  margin: 10px;
+}
+.footer_menu {
+  display: flex;
+  margin-top: 20px;
+}
+.footer_menu a {
+  display: flex;
+  padding-left: 10px;
+}
+
+.footer_area .bottom {
+}
+
+.footer_area .bottom .info {
+  width: 1280px;
+  text-align: left;
+
+}
+.bottom .info .title {
+  font-size: 20px;
+  padding-left: 30px
+}
+
+/* copyright */
+.footer_area .copyright {
+  margin-left: 20px;
+  text-align: center;
+  font-size: 15px;
+  padding: 10px;
+}
+
+/* .footer_area .copyright::before {
   width: 100%;
   position: absolute;
   height: 1px;
   content: '';
   background-color: #bbbbbb;
 } */
-        .footer_area .copyright p {
-            width: 100%;
-            text-align: left;
-        }
+.footer_area .copyright p {
+  width: 100%;
+  text-align: left;
+}
 
     </style>
     <body>
         <div class="wrapper">
             <!-- Header  -->
+
             <header>
                 <div class="top">
                     <div class="logo">
                         <a th:href="@{/}">
-                            <img src="../img/black-yagiyo.png" alt=""
-                        /></a>
+                            <img src="../../img/black-yagiyo.png" alt=""
+                            /></a>
                     </div>
 
                     <!--      검색어   -->
                     <div class="search_box">
                         <form th:action="@{/search}" method="get">
-                            <input type="text" name="query" value="" />
+                            <input type="text" name="query" value=""/>
                             <button type="submit"></button>
                         </form>
                         <!-- <p id="recent-search"></p> -->
                     </div>
 
                     <nav class="gnb_box">
-                        <a th:href="@{/name}">AI분석</a>
-                        <a href="">커뮤니티</a>
-                        <a href="">약국정보</a>
-                        <div th:if="${!session.isEmpty()}">
-                            <p th:text="${session.loginMember.gubun}"></p>
-                        </div>
+                        <span class="hot">HOT</span>
+                        <a th:href="@{/name}">📝AI분석</a>
+                        <a href="/board/paging">커뮤니티</a>
+                        <a th:href="@{/map}">약국정보</a>
+                        <th:bolck
+                                class="mypage"
+                                th:unless="${session.isEmpty()}"
+                        >
+                            <a href="" th:href="@{|/mypage/${session.loginMember.memberId}/fix|}">마이페이지</a>
+                        </th:bolck>
+
                         <div>
                             <th:bolck
-                                class="login"
-                                th:if="${session.isEmpty()}"
+                                    class="login"
+                                    th:if="${session.isEmpty()}"
                             >
                                 <a href="" th:href="@{/login}">로그인</a>
                             </th:bolck>
                             <th:bolck
-                                class="logout"
-                                th:unless="${session.isEmpty()}"
+                                    class="logout"
+                                    th:unless="${session.isEmpty()}"
                             >
                                 <a href="" th:href="@{/logout}">로그아웃</a>
                             </th:bolck>
@@ -341,6 +430,7 @@
                     </nav>
                 </div>
             </header>
+
             <div class="save_box">
                 <h3>수정</h3>
                 <form
@@ -350,7 +440,7 @@
                 >
                     <!-- <input type="hidden" name="boardWriter"><br>-->
                     <div class="row row1">
-                        닉네임<input
+                        닉네임 :<input
                             type="text"
                             name="boardWriter"
                             th:value="${board.boardWriter}"
@@ -358,11 +448,10 @@
                         />
                     </div>
                     <div class="row row2">
-                        게시글 비밀번호
-                        <input type="text" name="boardPass" id="boardPass" />
+                        <input type="hidden" name="boardPass" id="boardPass" />
                     </div>
                     <div class="row row3">
-                        제목
+                        제목 :
                         <input
                             type="text"
                             name="boardTitle"
@@ -401,9 +490,9 @@
                 <div class="footer_area">
                     <div class="top">
                         <img
-                            class="footer_img"
-                            th:src="@{../img/white-yagiyo.png}"
-                            alt=""
+                                class="footer_img"
+                                th:src="@{../../img/white-yagiyo.png}"
+                                alt=""
                         />
                         <div class="footer_menu">
                             <a href="">이용약관</a>
@@ -430,13 +519,7 @@
         </div>
         <script th:inline="javascript">
             const boardUpdate = () => {
-              const pass = [[${board.boardPass}]];
-              const inputPass = document.getElementById("boardPass").value;
-              if (pass == inputPass) {
-                document.updateForm.submit();
-              } else {
-                alert("비밀번호가 일치하지 않습니다!");
-              }
+                document.updateForm.submit();           
             }
         </script>
     </body>

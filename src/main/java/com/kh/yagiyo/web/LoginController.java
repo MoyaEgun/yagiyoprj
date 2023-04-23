@@ -4,6 +4,8 @@ import com.kh.yagiyo.domain.common.mail.MailService;
 import com.kh.yagiyo.domain.common.util.PasswordGenerator;
 import com.kh.yagiyo.domain.entity.Member;
 import com.kh.yagiyo.domain.member.svc.MemberSVC;
+import com.kh.yagiyo.domain.member.svc.RegisterMail;
+import com.kh.yagiyo.domain.member.svc.RegisterMail2;
 import com.kh.yagiyo.web.form.login.LoginForm;
 import com.kh.yagiyo.web.form.member.FindIdForm;
 import com.kh.yagiyo.web.form.member.FindPWForm;
@@ -16,12 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
+import java.util.Random;
 
 @Slf4j
 @Controller
@@ -32,9 +33,11 @@ public class LoginController {
 
   private final MailService ms;
 
+  private final RegisterMail2 registerMail2;
+
   //로그인화면
   @GetMapping("/login")
-  public String loginForm(Model model){
+  public String loginForm(Model model) {
     model.addAttribute("loginForm", new LoginForm());
     return "login";
   }
@@ -42,28 +45,28 @@ public class LoginController {
   //로그인처리
   @PostMapping("/login")
   public String login(
-      @Valid @ModelAttribute LoginForm loginForm,
-      BindingResult bindingResult,
-      HttpServletRequest httpServletRequest,
-      @RequestParam(value="redirectUrl",required = false, defaultValue = "/") String redirectUrl
-      ){
+          @Valid @ModelAttribute LoginForm loginForm,
+          BindingResult bindingResult,
+          HttpServletRequest httpServletRequest,
+          @RequestParam(value = "redirectUrl", required = false, defaultValue = "/") String redirectUrl
+  ) {
 
-    log.info("redirectUrl={}",redirectUrl);
-    if(bindingResult.hasErrors()){
-      log.info("bindingResult={}",bindingResult);
+    log.info("redirectUrl={}", redirectUrl);
+    if (bindingResult.hasErrors()) {
+      log.info("bindingResult={}", bindingResult);
       return "login";
     }
 
     //1)아이디 존재유무
-    if(!memberSVC.isExist(loginForm.getId())){
-      bindingResult.rejectValue("id","login","아이디가 존재하지 않습니다.");
+    if (!memberSVC.isExist(loginForm.getId())) {
+      bindingResult.rejectValue("id", "login", "아이디가 존재하지 않습니다.");
       return "login";
     }
 
     //2)로그인
     Optional<Member> member = memberSVC.login(loginForm.getId(), loginForm.getPw());
-    if(member.isEmpty()){
-      bindingResult.rejectValue("pw","login","비밀번호가 일치하지 않습니다.");
+    if (member.isEmpty()) {
+      bindingResult.rejectValue("pw", "login", "비밀번호가 일치하지 않습니다.");
       return "login";
     }
 
@@ -71,25 +74,25 @@ public class LoginController {
     //세션이 있으면 해당 정보를 가져오고 없으면 세션생성
     HttpSession session = httpServletRequest.getSession(true);
     LoginMember loginMember = new LoginMember(
-        member.get().getMemberId(),
-        member.get().getId(),
-        member.get().getPw(),
-        member.get().getNick(),
-        member.get().getEmail(),
-        member.get().getGender(),
-        member.get().getAge(),
-        member.get().getGubun()  );
+            member.get().getMemberId(),
+            member.get().getId(),
+            member.get().getPw(),
+            member.get().getNick(),
+            member.get().getEmail(),
+            member.get().getGender(),
+            member.get().getAge(),
+            member.get().getGubun());
     session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
-    return "redirect:"+redirectUrl;
+    return "redirect:" + redirectUrl;
   }
 
   //로그아웃
   @GetMapping("logout")
-  public String logout(HttpServletRequest HttpServletRequest){
+  public String logout(HttpServletRequest HttpServletRequest) {
     //세션이 있으면 해당 정보를 가져오고 없으면 세션생성 하지 않음
     HttpSession session = HttpServletRequest.getSession(false);
-    if(session != null){
+    if (session != null) {
       session.invalidate();   //세션 제거
     }
     return "redirect:/";
@@ -110,9 +113,9 @@ public class LoginController {
 
   @PostMapping("/findId")
   public String findId(
-      @Valid @ModelAttribute FindIdForm findIdForm,
-      BindingResult bindingResult,
-      Model model) {
+          @Valid @ModelAttribute FindIdForm findIdForm,
+          BindingResult bindingResult,
+          Model model) {
     if (bindingResult.hasErrors()) {
       return "member/findId";
     }
@@ -129,77 +132,28 @@ public class LoginController {
     return "member/findId";
   }
 
-
-
   //이메일 인증해서 비밀번호 찾기
   @GetMapping("/findPW")
-  public String findPWForm(@ModelAttribute FindPWForm findPWForm){
+  public String findPWForm(@ModelAttribute FindPWForm findPWForm) {
     return "member/findPW";
   }
 
   @PostMapping("/findPW")
-  public String findPW(
-      @Valid @ModelAttribute FindPWForm findPWForm,
-      BindingResult bindingResult,
-      HttpServletRequest request,
-      Model model
-  ){
-    log.info("findPWForm={}", findPWForm);
+  public String findPW(@Valid @ModelAttribute FindPWForm findPWForm,
+                       RedirectAttributes redirectAttributes,
+                       @RequestParam("email") String email) throws Exception {
 
-    if(bindingResult.hasErrors()){
-      return "member/findPW";
-    }
-
-    //1) email,nickname 인 회원 찾기
     boolean isExist = memberSVC.isExistByEmailAndId(findPWForm.getEmail(), findPWForm.getId());
-    if(!isExist){
-
-      return "member/findPW";
+    if (!isExist) {
+      redirectAttributes.addFlashAttribute("message", "해당 회원 정보를 찾을 수 없습니다.");
+      return "redirect:/findPW";
     }
-    //2) 임시비밀 번호 생성
-    PasswordGenerator.PasswordGeneratorBuilder passwordGeneratorBuilder = new PasswordGenerator.PasswordGeneratorBuilder();
-    String tmpPwd = passwordGeneratorBuilder
-        .useDigits(true)  //숫자포함여부
-        .useLower(true)   //소문자포함
-        .useUpper(true)   //대문자포함
-        .usePunctuation(false) //특수문자포함
-        .build()
-        .generate(6); //비밀번호 자리수
 
-    //3) 회원의 비밀번호를 임시비밀번호로 변경
-    memberSVC.changePasswd(findPWForm.getEmail(),tmpPwd);
+    String code = registerMail2.sendSimpleMessage(email);
+    System.out.println("임시 비밀번호 : " + code);
+    memberSVC.changePasswd(findPWForm.getEmail(), code);
 
-    //4) 메일 발송.
-    String subject = "신규 비밀번호 전송";
-
-    //로긴주소
-    StringBuilder url = new StringBuilder();
-    url.append("http://" + request.getServerName());    //localhost
-    url.append(":" + request.getServerPort());          //prot
-    url.append(request.getContextPath());               // /
-    url.append("/login");
-
-    //메일본문내용
-    StringBuilder sb = new StringBuilder();
-    sb.append("<!DOCTYPE html>");
-    sb.append("<html lang='ko'>");
-    sb.append("<head>");
-    sb.append("  <meta charset='UTF-8'>");
-    sb.append("  <meta name='viewport' content='width=device-width, initial-scale=1.0'>");
-    sb.append("  <title>임시 비밀번호 발송</title>");
-    sb.append("</head>");
-    sb.append("<body>");
-    sb.append("  <h1>신규비밀번호</h1>");
-    sb.append("  <p>아래 비밀번호로 로그인 하셔서 비밀번호를 변경하세요</p>");
-    sb.append("  <p>비밀번호 :" + tmpPwd + "</p>");
-    sb.append("  <a href='"+ url +"'>로그인</a>");
-    sb.append("</body>");
-    sb.append("</html>");
-
-    ms.sendMail(findPWForm.getEmail(), subject , sb.toString());
-
-    model.addAttribute("info", "회원 이메일로 임시번호가 발송되었습니다");
-
-    return "member/findPW";
+    redirectAttributes.addFlashAttribute("message", "임시 비밀번호가 발송되었습니다. 이메일을 확인해주세요.");
+    return "redirect:/findPW";
   }
 }

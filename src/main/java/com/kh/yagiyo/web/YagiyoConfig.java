@@ -38,7 +38,8 @@ public class YagiyoConfig implements WebMvcConfigurer {
                 "/comment/save",        // 댓글 저장
             "/members/mailConfirm",    // 이메일 인증
             "/deleteComment/", //댓글 삭제
-
+                "/members/Identity", //약관동의
+                "/members/Agree", //약관동의
 //            "/board/{id}",
             "/css/*",
             "/js/*",

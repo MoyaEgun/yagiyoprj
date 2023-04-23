@@ -292,7 +292,7 @@ public class MemberDAOImpl implements MemberDAO {
     return isExist;
   }
 
-  //비밀번호변경,나이,성별 입력
+  //비밀번호변경
   @Override
   public void changePasswd(String email, String pw) {
     StringBuffer sql = new StringBuffer();

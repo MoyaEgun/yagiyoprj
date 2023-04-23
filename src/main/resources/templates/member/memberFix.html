@@ -1,80 +1,165 @@
 <!DOCTYPE html>
-<html lang="ko"
+<html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>회원정보수정</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        rel="stylesheet"
+        href="../../static/css/memberFix.css"
+        th:href="@{/css/memberFix.css}"
+    />
+
+    <title>마이페이지</title>
 </head>
 <body>
-<h1>회원정보수정</h1>
+<div class="wrapper">
+    <!-- Header  -->
+
+    <header>
+        <div class="top">
+            <div class="logo">
+                <a th:href="@{/}">
+                    <img src="../../img/black-yagiyo.png" alt=""
+                    /></a>
+            </div>
+
+            <!--      검색어   -->
+            <div class="search_box">
+                <form th:action="@{/search}" method="get">
+                    <input type="text" name="query" value=""/>
+                    <button type="submit"></button>
+                </form>
+                <!-- <p id="recent-search"></p> -->
+            </div>
+
+            <nav class="gnb_box">
+                <span class="hot">HOT</span>
+                <a th:href="@{/name}">📝AI분석</a>
+                <a href="/board/paging">커뮤니티</a>
+                <a th:href="@{/map}">약국정보</a>
+                <th:bolck
+                        class="mypage"
+                        th:unless="${session.isEmpty()}"
+                >
+                    <a href="" th:href="@{|/mypage/${session.loginMember.memberId}/fix|}">마이페이지</a>
+                </th:bolck>
+
+                <div>
+                    <th:bolck
+                            class="login"
+                            th:if="${session.isEmpty()}"
+                    >
+                        <a href="" th:href="@{/login}">로그인</a>
+                    </th:bolck>
+                    <th:bolck
+                            class="logout"
+                            th:unless="${session.isEmpty()}"
+                    >
+                        <a href="" th:href="@{/logout}">로그아웃</a>
+                    </th:bolck>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+<div class="title"><h2>회원정보수정</h2></div>
+<div class="fix">
 
 <form th:object="${memberFixForm}" method="post" action="">
 <input type="hidden" th:name="id" th:value="${session.loginMember.id}">
 <input type="hidden" th:name="nick" th:value="${session.loginMember.nick}">
 <input type="hidden" th:name="email" th:value="${session.loginMember.email}">
-<div>
-    <label for="memberId">멤버번호 :</label>
-    <span th:text="${session.loginMember.memberId}"></span>
-</div>
+<!--<div>-->
+<!--    <label for="memberId">멤버번호 :</label>-->
+<!--    <span th:text="${session.loginMember.memberId}"></span>-->
+<!--</div>-->
     <br>
     <div>
-    <label for="id">아이디 :</label>
-    <span th:text="${session.loginMember.id}"></span>
+    <label for="id">아이디</label><br>
+    <span class="id" th:text="${session.loginMember.id}"></span>
     </div>
     <br>
     <div>
-    <label for="pw">비밀번호</label>
-    <input type="password" id="pw" name="pw" th:value="${session.loginMember.pw}" placeholder="수정할 비밀번호를 입력해주세요"/>
+    <label for="pw">비밀번호</label><br>
+    <input class="passwd" type="password" id="pw" name="pw" th:value="${session.loginMember.pw}" placeholder="수정할 비밀번호를 입력해주세요"/>
     <div id="pwError"></div>
     </div>
     <br>
     <div>
-    <label for="nick">닉네임 :</label>
-    <span th:text="${session.loginMember.nick}"></span>
+    <label for="nick">닉네임</label><br>
+    <span class="nickname" th:text="${session.loginMember.nick}"></span>
     </div>
     <br>
     <div>
-    <label for="email">이메일</label>
-    <span th:text="${session.loginMember.email}"></span>
+    <label for="email">이메일</label><br>
+    <span class="email" th:text="${session.loginMember.email}"></span>
     </div>
     <br>
 <!--    <div>-->
 <!--    <label for="gender">성별 :</label>-->
 <!--        <input type="text" id="gender" name="gender" th:value="${session.loginMember.gender}" placeholder="성별을 입력해주세요"/>-->
 <!--    </div>-->
-    <div>
-        <label for="gender">성별 :</label>
+    <div class="gender">
+        <label for="gender"></label>
         <input type="radio" id="male" name="gender" value="male" th:checked="${session.loginMember.gender == 'male'}">
         <label for="male">남성</label>
         <input type="radio" id="female" name="gender" value="female" th:checked="${session.loginMember.gender == 'female'}">
         <label for="female">여성</label>
     </div>
+
     <br>
 <!--    <div>-->
 <!--    <label for="age">나이 :</label>-->
 <!--        <input type="text" id="age" name="age" th:value="${session.loginMember.age}" placeholder="나이를 입력해주세요"/>-->
 <!--    </div>-->
-    <div>
-        <label for="age">나이 :</label>
+    <div class="ageArea">
+        <label for="age">나이</label><br>
         <input type="date" id="age" name="age" th:value="${session.loginMember.age}" placeholder="나이를 입력해주세요"/>
     </div>
-
     <br>
-    <div><button type="submit" id="fixBtn" th:text="#{button.update}">수정</button></div>
-    <div><a th:href="@{|/mypage/${session.loginMember.memberId}/delete|}">탈퇴 </a></div>
-
-
+    <div class="btn">
+        <button id="fixBtn" class="click" type="submit" th:text="#{button.update}" />
+        <div class="delete"><a th:href="@{|/mypage/${session.loginMember.memberId}/delete|}">탈퇴 </a></div>
+    </div>
 </form>
+</div>
+
+    <footer>
+        <div class="footer_area">
+            <div class="top">
+                <img
+                        class="footer_img"
+                        th:src="@{../../img/white-yagiyo.png}"
+                        alt=""
+                />
+                <div class="footer_menu">
+                    <a href="">이용약관</a>
+                    <a href="">개인정보처리방침</a>
+                </div>
+            </div>
+
+            <!--footer - bottom  -->
+
+            <div class="bottom">
+                <div class="info">
+                    <span class="title">주(야기요)</span>
+                    <p></p>
+                </div>
+            </div>
+
+            <!--footer - copyright -->
+
+            <div class="copyright">
+                <p>Copyright 2023 YAGIYO. Allrights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</div>
+
+
 <script>
-
-{
-//마이페이지 이동
-
-// id 값이 하나일때는 documnet 해서 변수 지정할 필요 없음
-   addBtn.addEventListener('click', () => {
-  window.location.href = '/mypage';
-});
-}
 
 {
 //비밀번호 허용길이 체크

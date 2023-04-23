@@ -20,7 +20,7 @@
         <div class="top">
             <div class="logo">
                 <a th:href="@{/}">
-                    <img th:src="@{../img/black-yagiyo.png}" alt=""
+                    <img src="../img/black-yagiyo.png" alt=""
                     /></a>
             </div>
 
@@ -34,12 +34,17 @@
             </div>
 
             <nav class="gnb_box">
-                <a th:href="@{/name}">AI분석</a>
-                <a href="">커뮤니티</a>
-                <a href="">약국정보</a>
-                <div th:if="${!session.isEmpty()}">
-                    <p th:text="${session.loginMember.gubun}"></p>
-                </div>
+                <span class="hot">HOT</span>
+                <a th:href="@{/name}">📝AI분석</a>
+                <a href="/board/paging">커뮤니티</a>
+                <a th:href="@{/map}">약국정보</a>
+                <th:bolck
+                        class="mypage"
+                        th:unless="${session.isEmpty()}"
+                >
+                    <a href="" th:href="@{|/mypage/${session.loginMember.memberId}/fix|}">마이페이지</a>
+                </th:bolck>
+
                 <div>
                     <th:bolck
                             class="login"
@@ -66,7 +71,7 @@
         >
             <!-- <input type="hidden" name="boardWriter"><br>-->
             <div class="row row1">
-                닉네임<input
+                닉네임 : <input
                     type="text"
                     name="boardWriter"
                     th:value="${session.loginMember.nick}"
@@ -74,10 +79,10 @@
             />
             </div>
             <div class="row row2">
-                게시글 비밀번호 <input type="text" name="boardPass"/>
+                 <input type="hidden" name="boardPass"/>
             </div>
             <div class="row row3">
-                제목 <input type="text" name="boardTitle"/>
+                제목 :<input type="text" name="boardTitle"/>
             </div>
             <div class="row row4">
                 <div>

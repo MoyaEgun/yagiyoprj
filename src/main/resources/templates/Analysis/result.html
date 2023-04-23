@@ -5,50 +5,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title th:text="${pageTitle}">결과</title>
-  <link
-      rel="stylesheet"
-      href="/css/result.css"
-      th:href="@{/css/result.css}"
-  />
-
-  <style>
-    .left {
-    font-size: 20px;
-    font-weight: 700;
-    padding: 10px;
-    }
-    .left2 {
-      font-size: 20px;
-      font-weight: 700;
-      padding: 10px;
-    }
-    .left3 {
-      font-size: 20px;
-      font-weight: 700;
-      padding: 10px;
-    }
-    .right {
-      font-size: 14px;
-      font-weight: 600;
-    }
-    .right .tag{
-    justify-content: left;
-    margin-left: 20px;
-    display: flex;
-    flex-direction: row;
-    }
-    .right .tag li {
-     margin-right: 34px;
-    }
-    ul {
-      font-size: 14px;
-    }
-      #height-value,
-      #weight-value {
-        display: none;
-      }
-      .hidden{display: none;}
-    </style>
+  <link rel="stylesheet" href="/css/result.css" th:href="@{/css/result.css}">
+  <link rel="stylesheet" href="/css/header.css" th:href="@{/css/header.css}">
+  <link rel="stylesheet" href="" th:href="@{/css/FinishModal.css}">
 </head>
 <body>
 <div id="app">
@@ -56,27 +15,44 @@
   <header id="header" class="store depth1">
     <div class="top">
       <div class="logo">
-        <!-- &lt;!&ndash; 이미지 경로 바꿔주세요 &ndash;&gt; -->
-        <a href="#" onclick="window.location.href='http://localhost:9080'">
-          <img th:src="@{/img/black-yagiyo.png}" alt="" src="/" />
-        </a>
+        <a th:href="@{/}">
+          <img src="../img/black-yagiyo.png" alt=""
+          /></a>
       </div>
+      <!--      검색어   -->
       <div class="search_box">
-        <input
-            class="searchbar"
-            type="text"
-            placeholder="영양제 성분 검색을 해보세요 💊 "
-        />
-        <div class="search_btn">
-          <!-- &lt;!&ndash; 이미지 경로 바꿔주세요 &ndash;&gt; -->
-          <img th:src="@{/img/search_div_icn.png}" alt="" />
-        </div>
+        <form th:action="@{/search}" method="get">
+          <input type="text" name="query" value=""/>
+          <button type="submit"></button>
+        </form>
+        <!-- <p id="recent-search"></p> -->
       </div>
       <nav class="gnb_box">
-        <a href="">AI분석</a>
-        <a href="">커뮤니티</a>
-        <a href="">약국정보</a>
-        <a href="">로그인</a>
+        <span class="hot">HOT</span>
+        <a th:href="@{/name}">📝AI분석</a>
+        <a href="/board/paging">커뮤니티</a>
+        <a th:href="@{/map}">약국정보</a>
+        <th:bolck
+            class="mypage"
+            th:unless="${session.isEmpty()}"
+        >
+          <a href="" th:href="@{|/mypage/${session.loginMember.memberId}/fix|}">마이페이지</a>
+        </th:bolck>
+
+        <div>
+          <th:bolck
+              class="login"
+              th:if="${session.isEmpty()}"
+          >
+            <a href="" th:href="@{/login}">로그인</a>
+          </th:bolck>
+          <th:bolck
+              class="logout"
+              th:unless="${session.isEmpty()}"
+          >
+            <a href="" th:href="@{/logout}">로그아웃</a>
+          </th:bolck>
+        </div>
       </nav>
     </div>
   </header>
@@ -121,10 +97,11 @@
               <li>30</li>
             </ul>
           </div>
-          <p>좋아요!</p>
+          <p>앞으로도 꾸준히 관리 해보아요!</p>
         </div>
         <div class="recommend-wrap">
-          <h4>생활습관 개선이 필요해요</h4>
+          <img src="/img/icon-grade-GOOD.png" alt="">
+          <h4>좋은 생활습관이에요.</h4>
           <ul class="bullet-item"></ul>
         </div>
         <p>* 본 결과는 의사의 처방을 대신하지 않습니다.</p>
@@ -136,7 +113,7 @@
         <em id="selected-count">0</em>
       </h2>
       <ul>
-        <li class="nav-item" data-illness="eyes">
+        <li class="nav-item">
           <div class="img-wrap" style="background-color: #f9d4bf">
             <img src="/img/루테인.png" alt="" />
           </div>
@@ -144,15 +121,15 @@
             <p>루테인</p>
           </div>
         </li>
-        <li class="nav-item" data-illness="antioxidation">
+        <li class="nav-item">
           <div class="img-wrap" style="background-color: lightyellow">
-            <img src="/img/비타민B.png" alt="" />
+            <img src="/img/비타민.png" alt="" />
           </div>
           <div class="text-wrap">
             <p>비타민C</p>
           </div>
         </li>
-        <li class="nav-item" data-illness="joint">
+        <li class="nav-item">
           <div class="img-wrap" style="background-color: #ebf5f5">
             <img src="/img/칼슘.png" alt="" />
           </div>
@@ -160,7 +137,6 @@
             <p>칼슘</p>
           </div>
         </li>
-
       </ul>
     </div>
     <!--    영양성분 분석-->
@@ -198,18 +174,10 @@
             분석 결과를 토대로 추천하는 영양제입니다. 자세한 내용이
             궁금하다면 제품을 클릭해주세요
           </p>
-          <ul id="result">
+          <ul id="result1">
             <li>
-              <span id="illness-value"></span>
-              <a
-                  href="https://search.shopping.naver.com/catalog/21839321494?query=%EC%98%A4%EB%A9%94%EA%B0%803&NaPm=ct%3Dlgk86zo0%7Cci%3Daab56bbae994c01b9c17472b65b8e5df198d71a6%7Ctr%3Dslsl%7Csn%3D95694%7Chk%3D07a53635ea041363f45bacdbe51195011f956f24"
-              >
-                <img
-                    src="/img/프로메가오메가3.jpg"
-                    alt=""
-                    width="100"
-                    height="100"
-                />
+              <a href="https://search.shopping.naver.com/catalog/21839321494?query=%EC%98%A4%EB%A9%94%EA%B0%803&NaPm=ct%3Dlgk86zo0%7Cci%3Daab56bbae994c01b9c17472b65b8e5df198d71a6%7Ctr%3Dslsl%7Csn%3D95694%7Chk%3D07a53635ea041363f45bacdbe51195011f956f24">
+                <img src="/img/프로메가오메가3.jpg" alt="" width="100" height="100"/>
               </a>
             </li>
           </ul>
@@ -217,12 +185,7 @@
         <div class="footer omega3"></div>
       </div>
     </section>
-    <section
-        id="hyals"
-        class="hidden"
-        data-title="히알루론산"
-        data-color="#f9d4bf"
-    >
+    <section id="hyals"  class="hidden" data-title="히알루론산" data-color="#f9d4bf">
       <div class="inner">
         <div
             class="header result-content-header"
@@ -250,29 +213,17 @@
             분석 결과를 토대로 추천하는 영양제입니다. 자세한 내용이
             궁금하다면 제품을 클릭해주세요
           </p>
-          <ul id="result3">
+          <ul id="result2">
             <li>
-              <a
-                  href="https://search.shopping.naver.com/catalog/21839321494?query=%EC%98%A4%EB%A9%94%EA%B0%803&NaPm=ct%3Dlgk86zo0%7Cci%3Daab56bbae994c01b9c17472b65b8e5df198d71a6%7Ctr%3Dslsl%7Csn%3D95694%7Chk%3D07a53635ea041363f45bacdbe51195011f956f24"
-              >
-                <img
-                    src="/img/프로메가오메가3.jpg"
-                    alt=""
-                    width="100"
-                    height="100"
-                />
+              <a href="https://search.shopping.naver.com/catalog/21839321494?query=%EC%98%A4%EB%A9%94%EA%B0%803&NaPm=ct%3Dlgk86zo0%7Cci%3Daab56bbae994c01b9c17472b65b8e5df198d71a6%7Ctr%3Dslsl%7Csn%3D95694%7Chk%3D07a53635ea041363f45bacdbe51195011f956f24">
+                <img src="/img/프로메가오메가3.jpg" alt="" width="100" height="100"/>
               </a>
             </li>
           </ul>
         </div>
       </div>
     </section>
-    <section
-        id="probiotics"
-        class="hidden"
-        data-title="프로바이오틱스"
-        data-color="#efe9d9"
-    >
+    <section id="probiotics" class="hidden" data-title="프로바이오틱스" data-color="#efe9d9">
       <div class="inner">
         <div
             class="header result-content-header"
@@ -305,17 +256,10 @@
             분석 결과를 토대로 추천하는 영양제입니다. 자세한 내용이
             궁금하다면 제품을 클릭해주세요
           </p>
-          <ul id="result2">
+          <ul id="result3">
             <li>
-              <a
-                  href="https://search.shopping.naver.com/catalog/21839321494?query=%EC%98%A4%EB%A9%94%EA%B0%803&NaPm=ct%3Dlgk86zo0%7Cci%3Daab56bbae994c01b9c17472b65b8e5df198d71a6%7Ctr%3Dslsl%7Csn%3D95694%7Chk%3D07a53635ea041363f45bacdbe51195011f956f24"
-              >
-                <img
-                    src="/img/프로메가오메가3.jpg"
-                    alt=""
-                    width="100"
-                    height="100"
-                />
+              <a href="https://search.shopping.naver.com/catalog/21839321494?query=%EC%98%A4%EB%A9%94%EA%B0%803&NaPm=ct%3Dlgk86zo0%7Cci%3Daab56bbae994c01b9c17472b65b8e5df198d71a6%7Ctr%3Dslsl%7Csn%3D95694%7Chk%3D07a53635ea041363f45bacdbe51195011f956f24">
+                <img src="/img/프로메가오메가3.jpg" alt="" width="100" height="100"/>
               </a>
             </li>
           </ul>
@@ -323,434 +267,121 @@
       </div>
     </section>
   </main>
-  <footer>푸터</footer>
-</div>
-<script th:src="@{../js/result.js}"></script>
-<!--<script th:src="@{../js/illness.js}"></script>-->
-<script>
-      const jsonData = {
-        eyes: {
-          lutein: {
-            name: '루테인',
-            description:
-              '# 노화로 인해 감소될 수 있는 황반색소밀도를 유지하여 눈건강에 도움을 줄 수 있음.\nㅤ\n # 1일 섭취량 : 성인 20mgㅤ',
-               image: '/img/루테인.png',
-          },
-        },
-        antioxidation: {
-          vitaminC: {
-            name: '비타민C',
-            description:
-              '# 결합조직 형성과 기능유지에 필요\nㅤ \n# 철의 흡수에 필요 \nㅤ \n# 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요\nㅤ \n# 1일 섭취량 : 영, 유아의 경우 35-45 mg, 아동은 50-90 mg, 성인은 100 mg, 임산부와 흡연자는 130-140 mg',
-          },
-        },
-        joint: {
-          calcium: {
-            name: '칼슘ㆍ마그네슘',
-            description:
-              '# 뼈와 치아 형성에 필요 \nㅤ \n# 신경과 근육 기능 유지에 필요\nㅤ \n# 정상적인 혈액응고에 필요\nㅤ \n# 골다공증발생 위험 감소에 도움을 줌\nㅤ \n# 1일 섭취량: 성인 6~700mg',
-          },
-        },
-      };
-
-      // URL에서 illness 값 추출
-      const urlParams = new URLSearchParams(window.location.search);
-      const illness = urlParams.get('illness');
-
-      const illnessArr = illness.split(',');
-      const illnessArrArr = [illnessArr];
-
-    if (illnessArr.includes('eyes')) {
-      // 코드
-    } else if (illnessArr.includes('joint') && illnessArr.includes('antioxidation')) {
-      // 코드
-    } else if (illnessArr.includes('joint')) {
-      // 코드
-    } else if (illnessArr.includes('antioxidation')) {
-      // 코드
-    } else {
-      console.error(`Could not find the illness: ${illness}`);
-    }
-
-      // HTML 코드 변경
-if (illness === 'eyes') {
-  const jsonDataEyes = jsonData.eyes;
-  const lutein = jsonDataEyes.lutein;
-
-const content = `
-  <div style="overflow: auto;">
-    <h4 style="float: left;">${lutein.name}</h4>
-    <img src="${lutein.image}" alt="${lutein.name}" width="80" height="80" style="float: left; margin-left: 5px;"/>
-  </div>
-  <ul style="clear: both;">
-    ${lutein.description
-      .split('\n')
-      .map(line => `<li>${line}</li>`)
-      .join('')}
-  </ul>
-`;
-
-  const leftDiv = document.querySelector('#omega3 .left');
-  if (!leftDiv) {
-    console.error('Could not find leftDiv for eyes');
-    console.error(new Error().stack);
-  } else {
-    leftDiv.innerHTML = content;
-  }
-}
-      /*joint*/
-      if (illness === 'joint') {
-        const jsonDataJoint = jsonData.joint;
-        const calcium = jsonDataJoint.calcium;
-
-        const content = `
-        <h4>${calcium.name}</h4>
-        <ul>
-          ${calcium.description
-            .split('\n')
-            .map(line => `<li>${line}</li>`)
-            .join('')}
-        </ul>
-      `;
-        const left2Div = document.querySelector('#hyals .left2');
-        if (!left2Div) {
-          console.error('Could not find left2Div for joint');
-          console.error(new Error().stack);
-        } else {
-          left2Div.innerHTML = content;
-        }
-      }
-
-      /* antioxidation */
-      if (illness === 'antioxidation') {
-        const jsonDataAntioxidation = jsonData.antioxidation;
-        const vitaminC = jsonDataAntioxidation.vitaminC;
-
-        const content = `
-    <h4>${vitaminC.name}</h4>
-    <ul>
-      ${vitaminC.description
-        .split('\n')
-        .map(line => `<li>${line}</li>`)
-        .join('')}
-    </ul>
-  `;
-        const left3Div = document.querySelector('#probiotics .left3');
-        if (!left3Div) {
-          console.error('Could not find left3Div for antioxidation');
-          console.error(new Error().stack);
-        } else {
-          left3Div.innerHTML = content;
-        }
-      }
-
-      /*    eyes and joint    */
-         if (illness.includes('eyes') && illness.includes('joint')) {
-        const jsonDataEyes = jsonData.eyes;
-        const lutein = jsonDataEyes.lutein;
-        const jsonDataJoint = jsonData.joint;
-        const calcium = jsonDataJoint.calcium;
-
-        const eyesContent = `
-           <div style="overflow: auto;">
-            <h4 style="float: left;">${lutein.name}</h4>
-            <img src="${lutein.image}" alt="${lutein.name}" width="80" height="80" style="float: left; margin-left: 5px;"/>
-          </div>
-          <ul style="clear: both;">
-            ${lutein.description
-              .split('\n')
-              .map(line => `<li>${line}</li>`)
-              .join('')}
-          </ul>
-        `;
-        const jointContent = `
-          <h4>${calcium.name}</h4>
-          <ul>
-            ${calcium.description
-              .split('\n')
-              .map(line => `<li>${line}</li>`)
-              .join('')}
-          </ul>
-        `;
-
-        const omega3Div = document.querySelector('#omega3 .left');
-        const hyalsDiv = document.querySelector('#hyals .left2');
-
-        if (omega3Div && hyalsDiv) {
-          omega3Div.innerHTML = eyesContent;
-          hyalsDiv.innerHTML = jointContent;
-        }
-      }
-        /*   eyes and anitoxidation     */
-      if (illness.includes('eyes') && illness.includes('antioxidation')) {
-        const jsonDataEyes = jsonData.eyes;
-        const lutein = jsonDataEyes.lutein;
-        const jsonDataAntioxidation = jsonData.antioxidation;
-        const vitaminC = jsonDataAntioxidation.vitaminC;
-
-        const eyesContent = `
-          <div style="overflow: auto;">
-          <h4 style="float: left;">${lutein.name}</h4>
-          <img src="${lutein.image}" alt="${lutein.name}" width="80" height="80" style="float: left; margin-left: 5px;"/>
-        </div>
-        <ul style="clear: both;">
-          ${lutein.description
-            .split('\n')
-            .map(line => `<li>${line}</li>`)
-            .join('')}
-        </ul>
-      `;
-
-        const antioxidationContent = `
-          <h4>${vitaminC.name}</h4>
-          <ul>
-            ${vitaminC.description
-              .split('\n')
-              .map(line => `<li>${line}</li>`)
-              .join('')}
-          </ul>
-        `;
-
-        const omega3Div = document.querySelector('#omega3 .left');
-        const probioticsDiv = document.querySelector('#probiotics .left3');
-
-        if (omega3Div && probioticsDiv) {
-          omega3Div.innerHTML = eyesContent;
-          probioticsDiv.innerHTML = antioxidationContent;
-        }
-      }
-
-     /* joint and antioxidation */
-      if (illness.includes('joint') && illness.includes('antioxidation')) {
-        const jsonDataJoint = jsonData.joint;
-        const calcium = jsonDataJoint.calcium;
-        const jsonDataAntioxidation = jsonData.antioxidation;
-        const vitaminC = jsonDataAntioxidation.vitaminC;
-
-        const jointContent = `
-          <h4>${calcium.name}</h4>
-          <ul>
-            ${calcium.description
-              .split('\n')
-              .map(line => `<li>${line}</li>`)
-              .join('')}
-          </ul>
-        `;
-
-        const antioxidationContent = `
-          <h4>${vitaminC.name}</h4>
-          <ul>
-            ${vitaminC.description
-              .split('\n')
-              .map(line => `<li>${line}</li>`)
-              .join('')}
-          </ul>
-        `;
-        const hyalsDiv = document.querySelector('#hyals .left2');
-        const probioticsDiv = document.querySelector('#probiotics .left3');
-
-        if (hyalsDiv && probioticsDiv) {
-          hyalsDiv.innerHTML = jointContent;
-          probioticsDiv.innerHTML = antioxidationContent;
-        }
-      }
-
-
-/* eyes and joint and antioxidation */
-// If illness includes eyes, joint, or antioxidation
-if (
-  illness.includes('eyes') &&
-  illness.includes('joint') &&
-  illness.includes('antioxidation')
-) {
-  const jsonDataEyes = jsonData.eyes;
-  const lutein = jsonDataEyes.lutein;
-  const jsonDataJoint = jsonData.joint;
-  const calcium = jsonDataJoint.calcium;
-  const jsonDataAntioxidation = jsonData.antioxidation;
-  const vitaminC = jsonDataAntioxidation.vitaminC;
-
-  const eyesContent = `
-   <div style="overflow: auto;">
-      <h4 style="float: left;">${lutein.name}</h4>
-      <img src="${lutein.image}" alt="${lutein.name}" width="80" height="80" style="float: left; margin-left: 5px;"/>
+    <div class="btn-wrap">
+      <button class="btn btn-radius colored btn-finish">
+        <img src="/img/분석.png" alt="">
+        분석 종료하기</button>
+      <button class="btn btn-radius colored btn-screenshot">
+        <img src="/img/저장.png" alt="">
+        저장하기
+      </button>
     </div>
-    <ul style="clear: both;">
-      ${lutein.description
-        .split('\n')
-        .map(line => `<li>${line}</li>`)
-        .join('')}
-    </ul>
-  `;
-  const jointContent = `
-          <h4>${calcium.name}</h4>
-          <ul>
-            ${calcium.description
-              .split('\n')
-              .map(line => `<li>${line}</li>`)
-              .join('')}
-          </ul>
-        `;
-  const antioxidationContent = `
-          <h4>${vitaminC.name}</h4>
-          <ul>
-            ${vitaminC.description
-              .split('\n')
-              .map(line => `<li>${line}</li>`)
-              .join('')}
-          </ul>
-        `;
-  const omega3Div = document.querySelector('#omega3 .left');
-  const hyalsDiv = document.querySelector('#hyals .left2');
-  const probioticsDiv = document.querySelector('#probiotics .left3');
+    <!-- Modal code -->
+    <div class="modal">
+      <div class="modal-content">
+        <p>분석을 종료하고 메인페이지로 이동하시겠습니까?</p>
+        <div class="modal-btn-wrap">
+          <button class="btn btn-radius colored confirm-btn">종료</button>
+          <button class="btn btn-radius colored cancel-btn">취소</button>
+        </div>
+      </div>
+    </div>
+  <footer>
+    <div class="footer_area">
+      <div class="top">
+        <img
+            class="footer_img"
+            th:src="@{../img/white-yagiyo.png}"
+            alt=""
+        />
+        <div class="footer_menu">
+          <a href="">이용약관</a>
+          <a href="">개인정보처리방침</a>
+        </div>
+      </div>
 
-  if (omega3Div && hyalsDiv && probioticsDiv) {
-    omega3Div.innerHTML = eyesContent;
-    hyalsDiv.innerHTML = jointContent;
-    probioticsDiv.innerHTML = antioxidationContent;
-  }
-}
+      <!--footer - bottom  -->
 
- // Show relevant section and hide others
-  const omega3Section = document.querySelector('#omega3');
-  const hyalsSection = document.querySelector('#hyals');
-  const probioticsSection = document.querySelector('#probiotics');
+      <div class="bottom">
+        <div class="info">
+          <span class="title">주(야기요)</span>
+          <p></p>
+        </div>
+      </div>
 
-  console.log('illness:', illness);
-  console.log('omega3Section:', omega3Section);
-  console.log('hyalsSection:', hyalsSection);
-  console.log('probioticsSection:', probioticsSection);
+      <!--footer - copyright -->
 
-if (!omega3Section || !hyalsSection || !probioticsSection) {
-  console.error('Could not find sections');
-  console.error(new Error().stack);
-} else {
-  if (illness === 'eyes') {
-    omega3Section.classList.remove('hidden');
-    hyalsSection.classList.add('hidden');
-    probioticsSection.classList.add('hidden');
-  } else if (illness === 'joint') {
-    omega3Section.classList.add('hidden');
-    hyalsSection.classList.remove('hidden');
-    probioticsSection.classList.add('hidden');
-  } else if (illness === 'antioxidation') {
-    omega3Section.classList.add('hidden');
-    hyalsSection.classList.add('hidden');
-    probioticsSection.classList.remove('hidden');
-  } else if (illness.includes('eyes') && illness.includes('antioxidation')) {
-    omega3Section.classList.remove('hidden');
-    hyalsSection.classList.add('hidden');
-    probioticsSection.classList.remove('hidden');
-  } else if (illness.includes('eyes') && illness.includes('joint')) {
-    omega3Section.classList.remove('hidden');
-    hyalsSection.classList.remove('hidden');
-    probioticsSection.classList.add('hidden');
-  } else if (illness.includes('joint') && illness.includes('antioxidation')) {
-    omega3Section.classList.add('hidden');
-    hyalsSection.classList.remove('hidden');
-    probioticsSection.classList.remove('hidden');
-  } console.log('illness:', illness);
-if (illness.includes('eyes') && illness.includes('joint') && illness.includes('antioxidation')) {
-  console.log('all conditions met');
-  omega3Section.classList.remove('hidden');
-  hyalsSection.classList.remove('hidden');
-  probioticsSection.classList.remove('hidden');
-}
+      <div class="copyright">
+        <p>Copyright 2023 YAGIYO. Allrights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script >
+/*저장버튼 스크린샷*/
+function saveScreenshot() {
+  // Hide the button menu
+  var buttonWrap = document.querySelector('.btn-wrap');
+  buttonWrap.style.display = 'none';
 
-  console.log('omega3Section after:', omega3Section);
-  console.log('hyalsSection after:', hyalsSection);
-  console.log('probioticsSection after:', probioticsSection);
-}
+  // Capture the body element of the current page and create a canvas object
+  html2canvas(document.body, {scale: 4}).then(function(canvas) {
+    // Convert the canvas to an image file and download it
+    var link = document.createElement('a');
+    link.style.display = 'none';
+    document.body.appendChild(link);
 
+    link.download = 'screenshot.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
 
-</script>
+    document.body.removeChild(link);
 
-<script>
-const params = new URLSearchParams(window.location.search);
-const selectedIllness = params.get('illness');
-
-/* 다중선택 이미지 */
-const illnesses = ['eyes', 'joint', 'antioxidation'];
-
-illnesses.forEach((illness) => {
-  const recommendedItems = document.querySelectorAll(`[data-illness="${illness}"]`);
-  recommendedItems.forEach((recommendedItem) => {
-    recommendedItem.style.display = 'block';
+    // Show the button menu again
+    buttonWrap.style.display = 'btn-wrap';
   });
-});
-
-const navItems = document.querySelectorAll('.nav-item');
-
-navItems.forEach(item => {
-  item.style.display = 'none';
-});
-
-let recommendedNutrients = [];
-let recommendedTexts = [];
-
-if (selectedIllness.includes('eyes')) {
-  recommendedNutrients.push('lutein');
-  recommendedTexts.push('루테인');
 }
 
-if (selectedIllness.includes('joint')) {
-  recommendedNutrients.push('calcium');
-  recommendedTexts.push('칼슘ㆍ마그네슘');
-}
+// Connect the saveScreenshot function to the button click event handler
+document.querySelector('.btn-screenshot').addEventListener('click', saveScreenshot);
+</script>
+<script>
+  // Get the button element
+  let btn = document.querySelector('.btn-finish');
 
-if (selectedIllness.includes('antioxidation')) {
-  recommendedNutrients.push('vitaminC');
-  recommendedTexts.push('비타민C');
-}
+  // Add a click event listener to the button
+  btn.addEventListener('click', function() {
+    // Get the modal element
+    let modal = document.querySelector('.modal');
 
-const selectedIllnesses = selectedIllness.split(',').map(i => i.trim());
+    // Display the modal
+    modal.style.display = 'block';
 
-selectedIllnesses.forEach(selectedIllness => {
-  if (selectedIllness === 'eyes' && !recommendedNutrients.includes('lutein')) {
-    recommendedNutrients.push('lutein');
-    recommendedTexts.push('루테인');
-  }
-  if (selectedIllness === 'joint' && !recommendedNutrients.includes('calcium')) {
-    recommendedNutrients.push('calcium');
-    recommendedTexts.push('칼슘ㆍ마그네슘');
-  }
-  if (selectedIllness === 'antioxidation' && !recommendedNutrients.includes('vitaminC')) {
-    recommendedNutrients.push('vitaminC');
-    recommendedTexts.push('비타민C');
-  }
-});
+    // Get the cancel button element
+    let cancelBtn = document.querySelector('.cancel-btn');
 
-/* 배열에 있는 값과 일치하는 데이터만 화면에 표시 */
-const recommendedItems = document.querySelectorAll('.nav-item');
+    // Add a click event listener to the cancel button
+    cancelBtn.addEventListener('click', function() {
+      // Hide the modal
+      modal.style.display = 'none';
+    });
 
-recommendedItems.forEach((item) => {
-  if (recommendedNutrients.includes(item.dataset.id)) {
-    item.style.display = 'block';
-  } else {
-    item.style.display = 'none';
-  }
-});
+    // Get the confirm button element
+    let confirmBtn = document.querySelector('.confirm-btn');
 
-/* 배열의 첫번째 값을 찾아서 active클래스 추가 */
-const navItem = document.querySelector(`[data-id="${recommendedNutrients[0]}"]`);
+    // Add a click event listener to the confirm button
+    confirmBtn.addEventListener('click', function() {
+      // Redirect to the local address
+      window.location.href = 'http://localhost:9080';
 
-if (navItem) {
-  navItem.classList.add('active');
-}
-
-/* 단일선택 이미지 */
-const recommendedItem = document.querySelector(`[data-illness="${selectedIllness}"]`);
-
-if (recommendedItem) {
-  recommendedItem.style.display = 'block';
-}
-
-const heading = document.querySelector('.survey-nav h2');
-
-if (heading) {
-  heading.innerHTML = `추천영양성분 <em>${recommendedTexts.join(', ')}</em>`;
-}
-
-    </script>
+      // Hide the modal
+      modal.style.display = 'none';
+    });
+  });
+</script>
+<script th:src="@{../js/result.js}"></script>
+<script th:src="@{../js/illness.js}"></script>
+<script th:src="@{../js/nutrient.js}"></script>
 </body>
 </html>

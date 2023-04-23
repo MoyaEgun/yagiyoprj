@@ -9,24 +9,11 @@
       vertical-align: baseline;
       font-size: 100%;
     }
-    footer,
-    header,
-    main,
-    menu,
-    nav,
-    section {
-      display: block;
-    }
-    li,
-    ol,
-    ul {
-      list-style: none;
-    }
-    body,
-    html {
-      height: 100%;
-      width: 100%;
-    }
+    footer, header, main, menu, nav, section { display: block;}
+    li, ol, ul { list-style: none; }
+
+    body, html { height: 100%; width: 100%; }
+
     div{
     margin: 0;
           padding: 0;
@@ -52,18 +39,7 @@
       position: relative;
       height: 100%;
     }
-    /* 헤더 */
-    #header.store.depth1 {
-      height: 65px;
-      padding: 20px;
-    }
-    #header.store.depth1 {
-      position: relative;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-    }
+
      * {
       text-decoration: none;
       list-style: none;
@@ -71,88 +47,12 @@
       font-family: 'pretendard', sans-serif;
     }
 
-    @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
-    /* Header */
-    header {
-      width: 100%;
-      position: fixed;
-      z-index: 999;
-      background-color: #fff;
-      top: 0;
-    }
-    .top {
-      width: 1280px;
-      height: 100%;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    /* 로고이미지 */
-
-    .top .logo > img {
-      width: 150px;
-    }
-    .logo a img {
-      width: 150px;
-      height: 63.49px;
-    }
-    /* 검색 */
-    .top .search_box {
-      display: flex;
-      height: 30px;
-    }
-    .top .search_box .searchbar {
-      width: 300px;
-      height: 30px;
-      padding-left: 4px;
-      outline: 2px solid #999;
-      border: none;
-    }
-    .search_btn {
-      display: flex;
-      width: 20px;
-      height: 100%;
-      border: none;
-      box-shadow: none;
-      cursor: pointer;
-    }
-
-    /* 탑메뉴 */
-    .top .gnb_box {
-      display: flex;
-      position: relative;
-      font-weight: 600;
-      height: 30px;
-    }
-
-    .gnb_box > a {
-      position: relative;
-      margin-left: 40px;
-    }
-
-    .gnb_box > a::before {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: 0;
-      left: 0;
-      background-color: #000;
-      transition: width 0.25s ease;
-    }
-
-    .gnb_box > a:hover::before {
-      width: 100%;
-    }
-
     #surveyv3.surveyv3-result {
       width: 100%;
     }
     /* result top */
     #surveyv3.surveyv3-result > .result-top{
-      background-image: linear-gradient(to top, rgb(250, 241, 177), rgb(241, 209, 169));
+      background-image: linear-gradient(to top, #b4d6d9, #abb5d7);
     }
     /* result top 위아래 폭*/
     #surveyv3.surveyv3-result > .result-top {
@@ -372,9 +272,7 @@
       font-size: 20px;
       font-weight: 700;
       text-align: center;
-    }
-    #surveyv3.surveyv3-result > .result-top .inner > .recommend-wrap.BAD h4 {
-      color: #ff5c35;
+      color: #367bb3;
     }
     /*추천영양성분 BOX*/
     #surveyv3.surveyv3-result > .survey-nav {
@@ -408,9 +306,53 @@
     }
     #surveyv3.surveyv3-result > .survey-nav > h2 em {
       padding-left: 10px;
-      color: #ff5c35;
+      color: #367bb3;
       font-weight: 700;
     }
+
+    .left {
+        font-size: 20px;
+        font-weight: 700;
+        padding: 20px;
+        }
+        .left2 {
+          font-size: 20px;
+          font-weight: 700;
+          padding: 20px;
+        }
+        .left3 {
+          font-size: 20px;
+          font-weight: 700;
+          padding: 20px;
+        }
+        .right {
+          font-size: 14px;
+          font-weight: 600;
+        }
+        .right .tag{
+        justify-content: left;
+        display: flex;
+        flex-direction: row;
+
+        }
+        .right .tag li {
+         margin: 24px;
+        }
+        .inner .content {
+          flex-direction: row;
+        }
+        .inner .content {
+          padding: 20px;
+        }
+    ul {
+      font-size: 14px;
+    }
+      #height-value,
+      #weight-value {
+        display: none;
+      }
+     .hidden{display: none;}
+
     #surveyv3.surveyv3-result > .survey-nav > ul {
       border-top: 1px solid #ddd;
       padding: 10px 20px;
@@ -601,8 +543,6 @@
       background-size: 34px;
       background-image: url(/img/icon-bone.png);
     }
-
-
     #surveyv3.surveyv3-result > .result-content .inner > .header .right .rating {
       position: absolute;
       bottom: 15px;
@@ -649,4 +589,63 @@
       width: 40px;
       text-align: center;
       font-size: 11px;
+    }
+
+    /*분석 종료버튼*/
+    .btn-wrap {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 20px;
+      padding: 0 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* z-index: 9; */
+    }
+
+    .btn-wrap .btn {
+      appearance: none;
+      display: inline-block;
+      box-sizing: border-box;
+      width: 250px;
+      height: 56px;
+      margin: 0 30px;
+      line-height: 56px;
+      border: 0;
+      background-color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+      vertical-align: top;
+      color: #000;
+      padding: 0;
+      outline: 0;
+      border: 1px solid #666;
+      border-radius: 25px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .btn {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      letter-spacing:0.2em;
+      padding: 0 30px;
+    }
+    .btn-wrap .btn img {
+      vertical-align: middle;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+       border: 2px solid  rgb(219, 217, 246);
+       border-radius: 25px;
+    }
+
+    .btn.colored {
+      background-color: #fff;
+      color: rgba(131, 196, 203);
+      border: 0;
     }
